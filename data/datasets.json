@@ -1,0 +1,1332 @@
+{
+  "categories": [
+    {
+      "id": "ifc",
+      "name": "IFC Model Collections",
+      "description": "Collections of IFC (Industry Foundation Classes) building models, the open standard for BIM data exchange."
+    },
+    {
+      "id": "pointcloud",
+      "name": "Point Clouds & Scan-to-BIM",
+      "description": "Laser-scanned and RGB-D point cloud datasets of buildings and indoor spaces, used for scan-to-BIM, semantic segmentation, and as-built modeling."
+    },
+    {
+      "id": "floorplan",
+      "name": "Floorplans",
+      "description": "2D floorplan datasets (raster, vector, CAD) for layout analysis, plan generation, and plan-to-BIM reconstruction."
+    },
+    {
+      "id": "city",
+      "name": "3D City Models",
+      "description": "CityGML / CityJSON and other large-scale semantic 3D city and building datasets."
+    },
+    {
+      "id": "energy",
+      "name": "Energy & Building Performance",
+      "description": "Building energy models, meter data, and performance datasets for BEM and analytics."
+    },
+    {
+      "id": "construction",
+      "name": "Construction & Site",
+      "description": "Datasets captured on construction sites, imagery, SLAM sequences, equipment and safety detection."
+    },
+    {
+      "id": "synthetic",
+      "name": "Synthetic Indoor Scenes",
+      "description": "Synthetic, procedurally generated or artist-designed indoor scene datasets useful for pre-training and layout research."
+    },
+    {
+      "id": "benchmark",
+      "name": "Benchmarks & Machine Learning",
+      "description": "BIM-specific benchmarks and ML-ready datasets (classification, segmentation, retrieval on BIM/IFC data)."
+    }
+  ],
+  "related": [
+    {
+      "name": "Awesome CityGML",
+      "url": "https://github.com/OloOcki/awesome-citygml",
+      "note": "The definitive list of open semantic 3D city models, 215M+ freely available buildings across 22 countries, with per-dataset licenses. Go here for every national/city LoD2 dataset beyond the highlights listed above."
+    },
+    {
+      "name": "awesome-bim",
+      "url": "https://github.com/SikongSphere/awesome-bim",
+      "note": "Curated list of BIM software, libraries and tools, with a small open-dataset section."
+    },
+    {
+      "name": "awesome-point-cloud-analysis",
+      "url": "https://github.com/Yochengliu/awesome-point-cloud-analysis",
+      "note": "Papers and datasets for point cloud analysis broadly, beyond the building domain."
+    }
+  ],
+  "datasets": [
+    {
+      "name": "buildingSMART Sample Test Files",
+      "category": "ifc",
+      "description": "buildingSMART International's official IFC sample-file repository, currently holding PCERT certification discipline models (architecture, HVAC, structural, bridge, rail, road) for IFC 4 and IFC 4.3. Older community content moved to the Community Sample Test Files repo.",
+      "size": "PCERT models for 2 schema versions",
+      "license": "CC BY 4.0",
+      "source": "buildingSMART International",
+      "tags": [
+        "ifc",
+        "official",
+        "test-files",
+        "certification"
+      ],
+      "links": {
+        "download": "https://github.com/buildingSMART/Sample-Test-Files",
+        "website": "https://technical.buildingsmart.org/standards/ifc/ifc-examples/"
+      }
+    },
+    {
+      "name": "buildingSMART Community Sample Test Files",
+      "category": "ifc",
+      "description": "Community-maintained successor collection of IFC, BCF and IDS sample/test files organized by schema version (IFC 2x3, IFC 4, IFC 4.3 RC archive), includes a full mirror of the Schependomlaan dataset. Note: not official examples, and many files intentionally fail validation.",
+      "size": "Hundreds of files across 3 schema folders",
+      "license": "CC BY 4.0",
+      "year": 2024,
+      "source": "buildingSMART community",
+      "tags": [
+        "ifc",
+        "bcf",
+        "ids",
+        "test-files"
+      ],
+      "links": {
+        "download": "https://github.com/buildingsmart-community/Community-Sample-Test-Files",
+        "website": "https://github.com/buildingsmart-community/Community-Sample-Test-Files"
+      }
+    },
+    {
+      "name": "BIMData IFC Files Collection",
+      "category": "ifc",
+      "description": "Curated index of ~100 downloadable IFC files (40 BIM models, 3.7 GB) aggregated from public sources, DURAARK (paired IFC + E57 scans), the Open IFC Model Repository, NIBS Common BIM Files, BIMCollab and more, with direct per-file download links and sizes.",
+      "size": "100 IFC files, ~3.7 GB",
+      "license": "Varies per upstream source",
+      "source": "BIMData.io",
+      "tags": [
+        "ifc",
+        "index",
+        "aggregated"
+      ],
+      "links": {
+        "download": "https://github.com/bimdata/BIMData-Research-and-Development/blob/master/pages/IFC_FILES.md",
+        "website": "https://github.com/bimdata/BIMData-Research-and-Development/blob/master/pages/IFC_FILES.md"
+      }
+    },
+    {
+      "name": "buildingSMART IFC 4.3 Sample Models",
+      "category": "ifc",
+      "description": "Official sample models for IFC 4.3, covering infrastructure features: alignments, linear positioning, GIS referencing, structural analysis models, construction scheduling and geometry examples.",
+      "size": "12 example sets",
+      "license": "Unspecified",
+      "year": 2023,
+      "source": "buildingSMART International",
+      "tags": [
+        "ifc",
+        "ifc4.3",
+        "infrastructure",
+        "official"
+      ],
+      "links": {
+        "download": "https://github.com/buildingSMART/IFC4.3.x-sample-models",
+        "website": "https://github.com/buildingSMART/IFC4.3.x-sample-models"
+      }
+    },
+    {
+      "name": "IFC Schependomlaan",
+      "category": "ifc",
+      "description": "Complete lifecycle dataset of a real Dutch housing project (Nijmegen): design IFC + native Archicad models, as-planned models per construction week, subcontractor models, point clouds, schedules, a process-mining event log and drone footage. The de-facto standard openBIM research dataset. Note: the often-cited openBIMstandards/DataSetSchependomlaan repo is a dead redirect, use the archive repo (or the Community Sample Test Files mirror).",
+      "size": "~210 MB: IFC models, point clouds, event logs, drone media",
+      "license": "CC BY 4.0",
+      "year": 2016,
+      "source": "TU Eindhoven / Hendriks Bouw en Ontwikkeling / openBIMstandards",
+      "tags": [
+        "ifc",
+        "as-built",
+        "4d",
+        "point-cloud",
+        "real-project",
+        "event-log"
+      ],
+      "links": {
+        "download": "https://github.com/openBIMstandards/Archive-DataSetSchependomlaan",
+        "website": "https://github.com/openBIMstandards/Archive-DataSetSchependomlaan"
+      }
+    },
+    {
+      "name": "Common BIM Files (Duplex, Office, Clinic)",
+      "category": "ifc",
+      "description": "The classic set of openly shared BIM test models from the buildingSMART alliance, Duplex Apartment, Office Building and Medical Clinic, in IFC and native formats with COBie spreadsheets; widely used in tutorials and research.",
+      "size": "4 model sets (IFC + RVT + COBie)",
+      "license": "Free to use (no formal license)",
+      "year": 2012,
+      "source": "NIBS / buildingSMART alliance",
+      "tags": [
+        "ifc",
+        "revit",
+        "cobie",
+        "classic"
+      ],
+      "links": {
+        "download": "https://www.wbdg.org/bim/cobie/common-bim-files",
+        "website": "https://www.wbdg.org/bim/cobie/common-bim-files"
+      }
+    },
+    {
+      "name": "Open IFC Model Repository",
+      "category": "ifc",
+      "description": "One of the first public repositories of IFC building models (~182 files), a mix of real and test models used widely in early IFC research; also mirrored on Kaggle as 'Building Information Model IFC File Examples'.",
+      "size": "~182 IFC files",
+      "license": "Unspecified",
+      "year": 2008,
+      "source": "University of Auckland",
+      "tags": [
+        "ifc",
+        "repository"
+      ],
+      "links": {
+        "website": "http://openifcmodel.cs.auckland.ac.nz/"
+      }
+    },
+    {
+      "name": "S3DIS (Stanford 2D-3D-Semantics)",
+      "category": "pointcloud",
+      "description": "Indoor point clouds of 6 large office areas (271 rooms) with per-point semantic labels for 13 classes, plus registered RGB, depth and surface normals, the standard benchmark for indoor semantic segmentation.",
+      "size": "6 areas, 271 rooms, ~700M points",
+      "license": "Custom (research use, request form)",
+      "year": 2016,
+      "source": "Stanford University",
+      "tags": [
+        "point-cloud",
+        "semantic-segmentation",
+        "indoor",
+        "benchmark"
+      ],
+      "links": {
+        "download": "http://buildingparser.stanford.edu/dataset.html",
+        "website": "http://buildingparser.stanford.edu/dataset.html",
+        "paper": "https://arxiv.org/abs/1702.01105"
+      }
+    },
+    {
+      "name": "ScanNet",
+      "category": "pointcloud",
+      "description": "RGB-D video dataset of 1,513 indoor scans across 707 spaces with 3D camera poses, surface reconstructions and instance-level semantic annotations; the dominant benchmark for 3D indoor scene understanding.",
+      "size": "1,513 scans, 2.5M RGB-D frames",
+      "license": "Custom (non-commercial research, terms-of-use form)",
+      "year": 2017,
+      "source": "TU Munich / Stanford University",
+      "tags": [
+        "rgb-d",
+        "point-cloud",
+        "indoor",
+        "benchmark"
+      ],
+      "links": {
+        "download": "https://github.com/ScanNet/ScanNet",
+        "website": "http://www.scan-net.org/",
+        "paper": "https://arxiv.org/abs/1702.04405"
+      }
+    },
+    {
+      "name": "ScanNet++",
+      "category": "pointcloud",
+      "description": "High-fidelity successor to ScanNet: sub-millimeter laser scans, 33 MP DSLR images and iPhone RGB-D streams of indoor scenes with dense open-vocabulary semantic and instance annotations.",
+      "size": "460 scenes, 280k DSLR images, 3.7M iPhone RGB-D frames",
+      "license": "Custom (non-commercial research, application + token)",
+      "year": 2023,
+      "source": "TU Munich",
+      "tags": [
+        "laser-scan",
+        "rgb-d",
+        "indoor",
+        "benchmark"
+      ],
+      "links": {
+        "download": "https://scannetpp.mlsg.cit.tum.de/scannetpp/",
+        "website": "https://scannetpp.mlsg.cit.tum.de/scannetpp/",
+        "paper": "https://arxiv.org/abs/2308.11417"
+      }
+    },
+    {
+      "name": "Matterport3D",
+      "category": "pointcloud",
+      "description": "10,800 aligned panoramic views (RGB-D) across 90 building-scale scenes with surface reconstructions, camera poses and semantic segmentations of regions and objects.",
+      "size": "90 buildings, 194,400 RGB-D images",
+      "license": "Custom (non-commercial research, license agreement)",
+      "year": 2017,
+      "source": "Matterport / Princeton / Stanford / TUM",
+      "tags": [
+        "rgb-d",
+        "panorama",
+        "indoor",
+        "benchmark"
+      ],
+      "links": {
+        "download": "https://niessner.github.io/Matterport/",
+        "website": "https://niessner.github.io/Matterport/",
+        "paper": "https://arxiv.org/abs/1709.06158"
+      }
+    },
+    {
+      "name": "Habitat-Matterport 3D (HM3D)",
+      "category": "pointcloud",
+      "description": "1,000 building-scale 3D reconstructions of real interiors (homes, offices, public spaces) for embodied AI research; the largest dataset of its kind, usable in the Habitat simulator.",
+      "size": "1,000 scenes, 112.5k m² of floor space",
+      "license": "Custom (free for academic & commercial research, agreement)",
+      "year": 2021,
+      "source": "Meta AI / Matterport",
+      "tags": [
+        "mesh",
+        "indoor",
+        "embodied-ai"
+      ],
+      "links": {
+        "download": "https://aihabitat.org/datasets/hm3d/",
+        "website": "https://aihabitat.org/datasets/hm3d/",
+        "paper": "https://arxiv.org/abs/2109.08238"
+      }
+    },
+    {
+      "name": "Replica",
+      "category": "pointcloud",
+      "description": "18 highly photo-realistic reconstructions of indoor spaces with dense meshes, HDR textures, semantic classes and planar mirror/glass annotations.",
+      "size": "18 scenes",
+      "license": "Custom (research, Replica Research License)",
+      "year": 2019,
+      "source": "Meta Reality Labs",
+      "tags": [
+        "mesh",
+        "indoor",
+        "photorealistic"
+      ],
+      "links": {
+        "download": "https://github.com/facebookresearch/Replica-Dataset",
+        "website": "https://github.com/facebookresearch/Replica-Dataset",
+        "paper": "https://arxiv.org/abs/1906.05797"
+      }
+    },
+    {
+      "name": "ARKitScenes",
+      "category": "pointcloud",
+      "description": "5,047 RGB-D captures of 1,661 indoor venues acquired with Apple LiDAR devices, with high-resolution laser-scan ground truth and 3D oriented bounding boxes of furniture.",
+      "size": "5,047 scans, 1,661 venues",
+      "license": "Custom (Apple, non-commercial research)",
+      "year": 2021,
+      "source": "Apple",
+      "tags": [
+        "rgb-d",
+        "lidar",
+        "indoor"
+      ],
+      "links": {
+        "download": "https://github.com/apple/ARKitScenes",
+        "website": "https://github.com/apple/ARKitScenes",
+        "paper": "https://arxiv.org/abs/2111.08897"
+      }
+    },
+    {
+      "name": "3RScan",
+      "category": "pointcloud",
+      "description": "1,482 RGB-D scans of 478 indoor environments captured at multiple points in time, with object instance re-localization annotations, for change detection and long-term scene understanding.",
+      "size": "1,482 scans, 478 scenes",
+      "license": "Custom (non-commercial research, terms-of-use)",
+      "year": 2019,
+      "source": "TU Munich / Google",
+      "tags": [
+        "rgb-d",
+        "indoor",
+        "change-detection"
+      ],
+      "links": {
+        "download": "https://github.com/WaldJohannaU/3RScan",
+        "website": "https://github.com/WaldJohannaU/3RScan",
+        "paper": "https://arxiv.org/abs/1908.06109"
+      }
+    },
+    {
+      "name": "ISPRS Benchmark on Indoor Modelling",
+      "category": "pointcloud",
+      "description": "Point clouds of indoor environments of varying complexity with reference models, for benchmarking automatic reconstruction of indoor BIM/3D models from scans.",
+      "size": "6 point clouds",
+      "license": "Free for scientific use (attribution)",
+      "year": 2018,
+      "source": "ISPRS / TU Delft",
+      "tags": [
+        "point-cloud",
+        "scan-to-bim",
+        "benchmark",
+        "indoor"
+      ],
+      "links": {
+        "download": "https://www2.isprs.org/commissions/comm4/wg5/benchmark-on-indoor-modelling/",
+        "website": "https://www2.isprs.org/commissions/comm4/wg5/benchmark-on-indoor-modelling/"
+      }
+    },
+    {
+      "name": "CV4AEC Scan-to-BIM Challenge",
+      "category": "pointcloud",
+      "description": "Workshop challenge data pairing laser-scanned point clouds of large buildings with 2D floorplans and 3D wall/column models, directly targeting automated scan-to-BIM.",
+      "size": "Multiple buildings, LAZ + JSON ground truth",
+      "license": "Custom (challenge terms, research)",
+      "year": 2023,
+      "source": "CV4AEC Workshop (CVPR)",
+      "tags": [
+        "point-cloud",
+        "scan-to-bim",
+        "challenge",
+        "floorplan"
+      ],
+      "links": {
+        "download": "https://cv4aec.github.io/",
+        "website": "https://cv4aec.github.io/"
+      }
+    },
+    {
+      "name": "Semantic3D",
+      "category": "pointcloud",
+      "description": "Outdoor terrestrial laser scans of European streets, churches, castles and squares with over 4 billion points labeled in 8 classes, a classic outdoor segmentation benchmark relevant to heritage BIM.",
+      "size": "30 scans, 4+ billion points",
+      "license": "Custom (research, cite paper)",
+      "year": 2017,
+      "source": "ETH Zurich",
+      "tags": [
+        "point-cloud",
+        "outdoor",
+        "tls",
+        "benchmark"
+      ],
+      "links": {
+        "download": "http://www.semantic3d.net/",
+        "website": "http://www.semantic3d.net/",
+        "paper": "https://arxiv.org/abs/1704.03847"
+      }
+    },
+    {
+      "name": "SensatUrban",
+      "category": "pointcloud",
+      "description": "UAV-photogrammetry point clouds covering ~7.6 km² of three UK cities (Birmingham, Cambridge, York) with ~3 billion points labeled in 13 semantic classes including buildings.",
+      "size": "~3 billion points, 7.6 km²",
+      "license": "Custom (non-commercial research)",
+      "year": 2021,
+      "source": "University of Oxford / SenseTime",
+      "tags": [
+        "point-cloud",
+        "urban",
+        "uav",
+        "benchmark"
+      ],
+      "links": {
+        "download": "https://github.com/QingyongHu/SensatUrban",
+        "website": "https://github.com/QingyongHu/SensatUrban",
+        "paper": "https://arxiv.org/abs/2009.03137"
+      }
+    },
+    {
+      "name": "Toronto-3D",
+      "category": "pointcloud",
+      "description": "Mobile laser scanning dataset of ~1 km of urban roadways in Toronto with ~78M points labeled in 8 classes including buildings.",
+      "size": "~78.3M points, 1 km",
+      "license": "Custom (research)",
+      "year": 2020,
+      "source": "University of Waterloo",
+      "tags": [
+        "point-cloud",
+        "mls",
+        "urban"
+      ],
+      "links": {
+        "download": "https://github.com/WeikaiTan/Toronto-3D",
+        "website": "https://github.com/WeikaiTan/Toronto-3D",
+        "paper": "https://arxiv.org/abs/2003.08284"
+      }
+    },
+    {
+      "name": "Paris-Lille-3D",
+      "category": "pointcloud",
+      "description": "Mobile laser scanning benchmark of ~2 km of streets in Paris and Lille, ~143M points with 50 classes (coarsened to 9 for the benchmark).",
+      "size": "~143M points, ~2 km",
+      "license": "CC BY-NC-SA 3.0",
+      "year": 2018,
+      "source": "Mines ParisTech",
+      "tags": [
+        "point-cloud",
+        "mls",
+        "urban",
+        "benchmark"
+      ],
+      "links": {
+        "download": "https://npm3d.fr/paris-lille-3d",
+        "website": "https://npm3d.fr/paris-lille-3d",
+        "paper": "https://arxiv.org/abs/1712.00032"
+      }
+    },
+    {
+      "name": "DALES",
+      "category": "pointcloud",
+      "description": "Aerial LiDAR dataset covering 10 km² with half a billion points labeled in 8 classes (buildings, vegetation, power lines, etc.), one of the largest ALS benchmarks.",
+      "size": "~505M points, 10 km²",
+      "license": "Custom (research)",
+      "year": 2020,
+      "source": "University of Dayton",
+      "tags": [
+        "point-cloud",
+        "als",
+        "aerial",
+        "benchmark"
+      ],
+      "links": {
+        "download": "https://udayton.edu/engineering/research/centers/vision_lab/research/was_data_analysis_and_processing/dale.php",
+        "website": "https://udayton.edu/engineering/research/centers/vision_lab/research/was_data_analysis_and_processing/dale.php",
+        "paper": "https://arxiv.org/abs/2004.11985"
+      }
+    },
+    {
+      "name": "Hessigheim 3D (H3D)",
+      "category": "pointcloud",
+      "description": "High-density UAV LiDAR point cloud and textured mesh of the village of Hessigheim, Germany, with fine-grained class labels; updated across multiple epochs.",
+      "size": "~126M points + mesh, multiple epochs",
+      "license": "Free for scientific use (registration)",
+      "year": 2021,
+      "source": "University of Stuttgart / DFG",
+      "tags": [
+        "point-cloud",
+        "uav",
+        "mesh",
+        "benchmark"
+      ],
+      "links": {
+        "download": "https://ifpwww.ifp.uni-stuttgart.de/benchmark/hessigheim/default.aspx",
+        "website": "https://ifpwww.ifp.uni-stuttgart.de/benchmark/hessigheim/default.aspx",
+        "paper": "https://doi.org/10.1016/j.ophoto.2021.100001"
+      }
+    },
+    {
+      "name": "CubiCasa5K",
+      "category": "floorplan",
+      "description": "5,000 scanned residential floorplan images with dense vector annotations in over 80 object categories (rooms, walls, doors, fixtures) in SVG format.",
+      "size": "5,000 floorplans, 80+ categories",
+      "license": "CC BY-NC 4.0 (data); MIT (code)",
+      "year": 2019,
+      "source": "CubiCasa / Tampere University",
+      "tags": [
+        "floorplan",
+        "svg",
+        "residential",
+        "segmentation"
+      ],
+      "links": {
+        "download": "https://zenodo.org/record/2613548",
+        "website": "https://github.com/CubiCasa/CubiCasa5k",
+        "paper": "https://arxiv.org/abs/1904.01920"
+      }
+    },
+    {
+      "name": "RPLAN",
+      "category": "floorplan",
+      "description": "80,000+ real vector floorplans of Asian residential buildings with room semantics and topology, used for data-driven floorplan generation research.",
+      "size": "80,788 vector floorplans",
+      "license": "Custom (research use, request form)",
+      "year": 2019,
+      "source": "University of Science and Technology of China",
+      "tags": [
+        "floorplan",
+        "vector",
+        "generation",
+        "residential"
+      ],
+      "links": {
+        "download": "http://staff.ustc.edu.cn/~fuxm/projects/DeepLayout/index.html",
+        "website": "http://staff.ustc.edu.cn/~fuxm/projects/DeepLayout/index.html",
+        "paper": "https://doi.org/10.1145/3355089.3356556"
+      }
+    },
+    {
+      "name": "FloorPlanCAD",
+      "category": "floorplan",
+      "description": "Large-scale real-world CAD drawing dataset: 16,103 vector floorplans (SVG) from 100+ projects, residential buildings, schools, hospitals, malls, with line-grained panoptic annotations of 35 object categories.",
+      "size": "16,103 CAD drawings, 35 categories",
+      "license": "CC BY-NC 4.0 (annotations)",
+      "year": 2021,
+      "source": "Alibaba / Zhejiang University",
+      "tags": [
+        "floorplan",
+        "cad",
+        "svg",
+        "panoptic"
+      ],
+      "links": {
+        "download": "https://floorplancad.github.io/",
+        "website": "https://floorplancad.github.io/",
+        "paper": "https://arxiv.org/abs/2105.07147"
+      }
+    },
+    {
+      "name": "CVC-FP",
+      "category": "floorplan",
+      "description": "122 scanned architectural floorplan documents in 4 different drawing styles with ground truth for walls, doors, windows, rooms, a classic plan-analysis benchmark.",
+      "size": "122 scanned plans",
+      "license": "Free for research (attribution)",
+      "year": 2015,
+      "source": "Computer Vision Center, UAB Barcelona",
+      "tags": [
+        "floorplan",
+        "raster",
+        "document-analysis"
+      ],
+      "links": {
+        "download": "https://dag.cvc.uab.es/dataset/cvc-fp-database-for-structural-floor-plan-analysis/",
+        "website": "https://dag.cvc.uab.es/dataset/cvc-fp-database-for-structural-floor-plan-analysis/"
+      }
+    },
+    {
+      "name": "Modified Swiss Dwellings (MSD)",
+      "category": "floorplan",
+      "description": "Machine-learning-ready floorplan benchmark derived from Swiss Dwellings: 5.3k+ floorplans of building complexes (18.9k apartments) with structural-component inputs and access-graph constraints, used for the ICCV 2023 floorplan auto-completion challenge and ECCV 2024 MSD benchmark.",
+      "size": "5,300+ floorplans, 18,900+ apartments",
+      "license": "CC BY 4.0",
+      "year": 2023,
+      "source": "TU Delft / Archilyse",
+      "tags": [
+        "floorplan",
+        "generation",
+        "graph",
+        "benchmark"
+      ],
+      "links": {
+        "download": "https://data.4tu.nl/datasets/e1d89cb5-6872-48fc-be63-aadd687ee6f9",
+        "website": "https://www.kaggle.com/datasets/caspervanengelenburg/modified-swiss-dwellings",
+        "paper": "https://arxiv.org/abs/2407.10121"
+      }
+    },
+    {
+      "name": "SESYD Floorplans",
+      "category": "floorplan",
+      "description": "Synthetic document database including 1,000 floorplan drawings generated from 10 layout templates with full symbol-level ground truth.",
+      "size": "1,000 synthetic plans",
+      "license": "Free for research",
+      "year": 2010,
+      "source": "Université de Tours",
+      "tags": [
+        "floorplan",
+        "synthetic",
+        "symbol-spotting"
+      ],
+      "links": {
+        "download": "http://mathieu.delalandre.free.fr/projects/sesyd/",
+        "website": "http://mathieu.delalandre.free.fr/projects/sesyd/"
+      }
+    },
+    {
+      "name": "ROBIN",
+      "category": "floorplan",
+      "description": "Repository Of BuildIng plaNs: 510 categorized floorplan images for sketch-based retrieval and classification research.",
+      "size": "510 plans, 3 categories",
+      "license": "Unspecified (public GitHub)",
+      "year": 2017,
+      "source": "IIT Roorkee",
+      "tags": [
+        "floorplan",
+        "retrieval"
+      ],
+      "links": {
+        "download": "https://github.com/gesstalt/ROBIN",
+        "website": "https://github.com/gesstalt/ROBIN"
+      }
+    },
+    {
+      "name": "Swiss Dwellings",
+      "category": "floorplan",
+      "description": "Large open database of ~45,000 apartment layouts (3.1M+ geometries) from ~3,100 Swiss buildings, with geometry, room semantics and extensive simulation results (view, sun, noise, centrality).",
+      "size": "~45,000 apartments, ~3,100 buildings",
+      "license": "CC BY 4.0",
+      "year": 2022,
+      "source": "Archilyse AG",
+      "tags": [
+        "floorplan",
+        "vector",
+        "simulation",
+        "residential"
+      ],
+      "links": {
+        "download": "https://zenodo.org/record/7070952",
+        "website": "https://zenodo.org/record/7070952"
+      }
+    },
+    {
+      "name": "LIFULL HOME'S Dataset",
+      "category": "floorplan",
+      "description": "Massive Japanese real-estate dataset with ~5.3 million rental listings including ~83 million images and floorplans, available to researchers through the NII IDR program.",
+      "size": "5.3M listings, 83M images",
+      "license": "Custom (academic research, application via NII IDR)",
+      "year": 2015,
+      "source": "LIFULL Co. / National Institute of Informatics (Japan)",
+      "tags": [
+        "floorplan",
+        "real-estate",
+        "images",
+        "large-scale"
+      ],
+      "links": {
+        "download": "https://www.nii.ac.jp/dsc/idr/en/lifull/",
+        "website": "https://www.nii.ac.jp/dsc/idr/en/lifull/"
+      }
+    },
+    {
+      "name": "Zillow Indoor Dataset (ZInD)",
+      "category": "floorplan",
+      "description": "71,474 panoramas from 1,524 real unfurnished homes with 3D room layouts, 2D/3D floorplans and camera poses, the largest real indoor layout dataset.",
+      "size": "1,524 homes, 71,474 panoramas",
+      "license": "Custom (non-commercial research, agreement)",
+      "year": 2021,
+      "source": "Zillow",
+      "tags": [
+        "floorplan",
+        "panorama",
+        "layout",
+        "residential"
+      ],
+      "links": {
+        "download": "https://github.com/zillow/zind",
+        "website": "https://github.com/zillow/zind",
+        "paper": "https://arxiv.org/abs/2103.16544"
+      }
+    },
+    {
+      "name": "3D BAG",
+      "category": "city",
+      "description": "Up-to-date 3D building models of the entire Netherlands (~10 million buildings) at multiple LoDs (1.2, 1.3, 2.2), generated from BAG cadastre data and AHN LiDAR; downloadable as CityJSON, OBJ and GeoPackage.",
+      "size": "~10M buildings, whole Netherlands",
+      "license": "CC BY 4.0",
+      "year": 2021,
+      "source": "TU Delft 3D Geoinformation Group",
+      "tags": [
+        "citygml",
+        "cityjson",
+        "lod2",
+        "netherlands",
+        "open-data"
+      ],
+      "links": {
+        "download": "https://3dbag.nl/",
+        "website": "https://docs.3dbag.nl/en/",
+        "paper": "https://doi.org/10.14358/PERS.21-00032R2"
+      }
+    },
+    {
+      "name": "PDOK 3D Basisvoorziening",
+      "category": "city",
+      "description": "The full topography of the Netherlands in 3D as CityJSON, every building in LoD1.2 plus terrain, roads, canals and bridges, published as open data by the Dutch national geo-portal PDOK.",
+      "size": "Whole Netherlands, large tiles",
+      "license": "Open data (Dutch government, attribution)",
+      "year": 2020,
+      "source": "PDOK / Kadaster",
+      "tags": [
+        "cityjson",
+        "netherlands",
+        "terrain",
+        "open-data"
+      ],
+      "links": {
+        "download": "https://www.pdok.nl/3d-basisvoorziening",
+        "website": "https://www.pdok.nl/3d-basisvoorziening"
+      }
+    },
+    {
+      "name": "GlobalBuildingAtlas",
+      "category": "city",
+      "description": "Global LoD1 3D building models covering roughly 97% of the world's buildings (~2.75 billion) with polygons and heights derived from satellite data, in GeoJSON.",
+      "size": "~2.75 billion buildings worldwide",
+      "license": "CC BY 4.0",
+      "year": 2025,
+      "source": "TU Munich",
+      "tags": [
+        "lod1",
+        "global",
+        "footprints",
+        "heights"
+      ],
+      "links": {
+        "download": "https://github.com/zhu-xlab/GlobalBuildingAtlas",
+        "website": "https://github.com/zhu-xlab/GlobalBuildingAtlas"
+      }
+    },
+    {
+      "name": "NYC 3D Building Model",
+      "category": "city",
+      "description": "3D massing model of every building in New York City (Gothic-standard LoD1/LoD2 style), maintained by the NYC Department of Information Technology & Telecommunications.",
+      "size": "~1M buildings",
+      "license": "NYC Open Data (free use)",
+      "year": 2016,
+      "source": "City of New York",
+      "tags": [
+        "city-model",
+        "open-data",
+        "usa"
+      ],
+      "links": {
+        "download": "https://www.nyc.gov/site/planning/data-maps/open-data/dwn-nyc-3d-model-download.page",
+        "website": "https://www.nyc.gov/site/planning/data-maps/open-data/dwn-nyc-3d-model-download.page"
+      }
+    },
+    {
+      "name": "Berlin 3D City Model",
+      "category": "city",
+      "description": "CityGML LoD2 model of all ~550,000 buildings in Berlin with textures, downloadable for free from the Berlin Business Location Center download portal.",
+      "size": "~550,000 buildings",
+      "license": "Free use (Berlin open data terms)",
+      "year": 2015,
+      "source": "Berlin Partner / Senate of Berlin",
+      "tags": [
+        "citygml",
+        "lod2",
+        "textured",
+        "germany"
+      ],
+      "links": {
+        "download": "https://www.businesslocationcenter.de/en/economic-atlas/download-portal/",
+        "website": "https://www.businesslocationcenter.de/en/economic-atlas/download-portal/"
+      }
+    },
+    {
+      "name": "Helsinki 3D City Models",
+      "category": "city",
+      "description": "City of Helsinki's semantic CityGML city information model and separate reality mesh model, both openly downloadable, one of the most complete open city models.",
+      "size": "Whole city (CityGML + mesh)",
+      "license": "CC BY 4.0",
+      "year": 2017,
+      "source": "City of Helsinki",
+      "tags": [
+        "citygml",
+        "mesh",
+        "finland",
+        "open-data"
+      ],
+      "links": {
+        "download": "https://hri.fi/data/en_GB/dataset/helsingin-3d-kaupunkimalli",
+        "website": "https://www.hel.fi/en/decision-making/information-on-helsinki/maps-and-geospatial-data/helsinki-3d"
+      }
+    },
+    {
+      "name": "LoD2 Building Models NRW",
+      "category": "city",
+      "description": "Open CityGML LoD2 building models for all of North Rhine-Westphalia, Germany (~10 million buildings), with standardized roof shapes; freely downloadable per municipality.",
+      "size": "~10M buildings",
+      "license": "DL-DE Zero 2.0 (public domain equivalent)",
+      "year": 2017,
+      "source": "Geobasis NRW",
+      "tags": [
+        "citygml",
+        "lod2",
+        "germany",
+        "open-data"
+      ],
+      "links": {
+        "download": "https://www.opengeodata.nrw.de/produkte/geobasis/3dg/",
+        "website": "https://www.bezreg-koeln.nrw.de/geobasis-nrw/produkte-und-dienste/3d-gebaeudemodelle"
+      }
+    },
+    {
+      "name": "Bavaria LoD2 Building Models",
+      "category": "city",
+      "description": "Open CityGML LoD2 models of all ~8 million buildings in Bavaria, released as open data by the Bavarian surveying administration.",
+      "size": "~8M buildings",
+      "license": "CC BY 4.0",
+      "year": 2023,
+      "source": "LDBV Bayern",
+      "tags": [
+        "citygml",
+        "lod2",
+        "germany",
+        "open-data"
+      ],
+      "links": {
+        "download": "https://geodaten.bayern.de/opengeodata/OpenDataDetail.html?pn=lod2",
+        "website": "https://geodaten.bayern.de/opengeodata/"
+      }
+    },
+    {
+      "name": "swissBUILDINGS3D",
+      "category": "city",
+      "description": "Vector-based 3D building models of Switzerland with roof geometries (~3.4 million buildings), free to download from swisstopo since the 2021 open government data release.",
+      "size": "~3.4M buildings",
+      "license": "Open Government Data (free use with attribution)",
+      "year": 2021,
+      "source": "swisstopo",
+      "tags": [
+        "city-model",
+        "lod2",
+        "switzerland",
+        "open-data"
+      ],
+      "links": {
+        "download": "https://www.swisstopo.admin.ch/en/landscape-model-swissbuildings3d-3-0-beta",
+        "website": "https://www.swisstopo.admin.ch/en/landscape-model-swissbuildings3d-3-0-beta"
+      }
+    },
+    {
+      "name": "CityJSON Example Datasets",
+      "category": "city",
+      "description": "Collection of open 3D city models converted to CityJSON, including Delft, Den Haag, Montréal, New York, Rotterdam, Vienna and Zürich, handy small files for testing CityJSON tooling.",
+      "size": "~10 city extracts",
+      "license": "Varies per city (mostly open)",
+      "year": 2019,
+      "source": "cityjson.org",
+      "tags": [
+        "cityjson",
+        "citygml",
+        "samples"
+      ],
+      "links": {
+        "download": "https://www.cityjson.org/datasets/",
+        "website": "https://www.cityjson.org/datasets/"
+      }
+    },
+    {
+      "name": "Open City Model",
+      "category": "city",
+      "description": "CityGML, CityJSON and Parquet LoD1 models for ~125 million US buildings, generated algorithmically from Microsoft/OSM footprints, downloadable per state/county from a public AWS S3 bucket.",
+      "size": "~125M buildings (USA)",
+      "license": "ODbL",
+      "year": 2019,
+      "source": "opencitymodel project",
+      "tags": [
+        "citygml",
+        "cityjson",
+        "usa",
+        "lod1"
+      ],
+      "links": {
+        "download": "https://github.com/opencitymodel/opencitymodel",
+        "website": "https://github.com/opencitymodel/opencitymodel"
+      }
+    },
+    {
+      "name": "DOE Commercial Prototype Building Models",
+      "category": "energy",
+      "description": "EnergyPlus models of 16 commercial building types across all US climate zones (plus residential prototypes), the reference models for US energy-code analysis.",
+      "size": "16 building types × climate zones",
+      "license": "Public domain (US Government)",
+      "year": 2011,
+      "source": "US Department of Energy / PNNL",
+      "tags": [
+        "energyplus",
+        "bem",
+        "prototype",
+        "usa"
+      ],
+      "links": {
+        "download": "https://www.energycodes.gov/prototype-building-models",
+        "website": "https://www.energycodes.gov/prototype-building-models"
+      }
+    },
+    {
+      "name": "EnergyPlus Example Files",
+      "category": "energy",
+      "description": "Hundreds of example building energy models (IDF) shipped with EnergyPlus, covering nearly every simulation feature, useful as templates and test cases.",
+      "size": "700+ IDF files",
+      "license": "BSD-style (EnergyPlus license)",
+      "year": 2001,
+      "source": "US DOE / NREL",
+      "tags": [
+        "energyplus",
+        "bem",
+        "examples"
+      ],
+      "links": {
+        "download": "https://github.com/NREL/EnergyPlus",
+        "website": "https://energyplus.net/"
+      }
+    },
+    {
+      "name": "Building Data Genome Project 2",
+      "category": "energy",
+      "description": "Hourly whole-building meter data (electricity, water, gas, steam) from 3,053 meters across 1,636 non-residential buildings over two full years, with weather and metadata.",
+      "size": "1,636 buildings, 53.6M measurements",
+      "license": "CC BY-SA 4.0",
+      "year": 2020,
+      "source": "BUDS Lab (NUS) et al.",
+      "tags": [
+        "meter-data",
+        "time-series",
+        "benchmark"
+      ],
+      "links": {
+        "download": "https://github.com/buds-lab/building-data-genome-project-2",
+        "website": "https://github.com/buds-lab/building-data-genome-project-2",
+        "paper": "https://www.nature.com/articles/s41597-020-00712-x"
+      }
+    },
+    {
+      "name": "ASHRAE Great Energy Predictor III",
+      "category": "energy",
+      "description": "Kaggle competition dataset with over 20 million hourly meter readings from 1,448 buildings at 16 sites worldwide, for building energy prediction models.",
+      "size": "1,448 buildings, 20M+ readings",
+      "license": "Kaggle competition terms (non-commercial)",
+      "year": 2019,
+      "source": "ASHRAE / Kaggle",
+      "tags": [
+        "meter-data",
+        "time-series",
+        "competition"
+      ],
+      "links": {
+        "download": "https://www.kaggle.com/c/ashrae-energy-prediction",
+        "website": "https://www.kaggle.com/c/ashrae-energy-prediction"
+      }
+    },
+    {
+      "name": "NREL End-Use Load Profiles (ResStock & ComStock)",
+      "category": "energy",
+      "description": "Calibrated 15-minute end-use load profiles for the entire US residential and commercial building stock, including efficiency/electrification upgrade scenarios; freely downloadable from the open AWS data lake, updated twice a year.",
+      "size": "All major US building types, TB-scale",
+      "license": "NREL BSD-style (ResStock/ComStock licenses)",
+      "year": 2021,
+      "source": "NREL / US DOE",
+      "tags": [
+        "bem",
+        "building-stock",
+        "load-profiles",
+        "usa"
+      ],
+      "links": {
+        "download": "https://data.openei.org/submissions/4520",
+        "website": "https://www.nrel.gov/buildings/end-use-load-profiles.html",
+        "paper": "https://www.nrel.gov/docs/fy22osti/80889.pdf"
+      }
+    },
+    {
+      "name": "CBECS Microdata",
+      "category": "energy",
+      "description": "US Commercial Buildings Energy Consumption Survey public-use microdata: building characteristics and energy consumption for a representative national sample of commercial buildings.",
+      "size": "~6,400 buildings (2018 survey)",
+      "license": "Public domain (US Government)",
+      "year": 2018,
+      "source": "US EIA",
+      "tags": [
+        "survey",
+        "energy-use",
+        "usa"
+      ],
+      "links": {
+        "download": "https://www.eia.gov/consumption/commercial/data/2018/",
+        "website": "https://www.eia.gov/consumption/commercial/"
+      }
+    },
+    {
+      "name": "MOCS (Moving Objects in Construction Sites)",
+      "category": "construction",
+      "description": "41,668 images collected from 174 construction sites with instance annotations of 13 categories of moving objects (workers, excavators, cranes, trucks, etc.).",
+      "size": "41,668 images, 13 categories",
+      "license": "Custom (research)",
+      "year": 2021,
+      "source": "Huazhong University of Science and Technology",
+      "tags": [
+        "images",
+        "object-detection",
+        "site",
+        "safety"
+      ],
+      "links": {
+        "download": "http://www.anlab340.com/Archives/IndexArctype/index/t_id/17.html",
+        "website": "http://www.anlab340.com/Archives/IndexArctype/index/t_id/17.html",
+        "paper": "https://doi.org/10.1016/j.autcon.2020.103482"
+      }
+    },
+    {
+      "name": "SODA (Site Object Detection dAtaset)",
+      "category": "construction",
+      "description": "Large-scale construction-site object detection dataset: ~19,800 images with 286,201 annotated instances across 15 classes grouped into workers, materials, machines and layout, collected from multiple sites, phases and weather conditions (VOC format).",
+      "size": "19,846 images, 286,201 instances, 15 classes",
+      "license": "Custom (research)",
+      "year": 2022,
+      "source": "South China University of Technology / Tsinghua",
+      "tags": [
+        "images",
+        "object-detection",
+        "site",
+        "safety"
+      ],
+      "links": {
+        "download": "https://scut-scet-academic.oss-cn-guangzhou.aliyuncs.com/SODA/2022.2/VOCv1.zip",
+        "website": "https://arxiv.org/abs/2202.09554",
+        "paper": "https://doi.org/10.1016/j.autcon.2022.104499"
+      }
+    },
+    {
+      "name": "ConSLAM",
+      "category": "construction",
+      "description": "Real construction-site SLAM dataset: periodically recorded LiDAR, RGB and IMU sequences plus ground-truth TLS scans of an ongoing construction project.",
+      "size": "4 sequences + ground-truth scans",
+      "license": "Open (research)",
+      "year": 2022,
+      "source": "University of Cambridge",
+      "tags": [
+        "slam",
+        "lidar",
+        "site",
+        "progress-monitoring"
+      ],
+      "links": {
+        "download": "https://github.com/mac137/ConSLAM",
+        "website": "https://github.com/mac137/ConSLAM",
+        "paper": "https://doi.org/10.1007/978-3-031-25082-8_21"
+      }
+    },
+    {
+      "name": "Hilti SLAM Challenge Datasets",
+      "category": "construction",
+      "description": "Multi-sensor (LiDAR, stereo cameras, IMU) sequences recorded in construction environments with millimeter-accurate ground truth, from the annual Hilti SLAM challenges.",
+      "size": "3 challenge editions, dozens of sequences",
+      "license": "CC BY-NC-SA 4.0",
+      "year": 2022,
+      "source": "Hilti / Oxford / ETH Zurich",
+      "tags": [
+        "slam",
+        "lidar",
+        "site",
+        "benchmark"
+      ],
+      "links": {
+        "download": "https://hilti-challenge.com/",
+        "website": "https://hilti-challenge.com/"
+      }
+    },
+    {
+      "name": "Hard Hat Workers Dataset",
+      "category": "construction",
+      "description": "7,000+ images of construction workers annotated for head/helmet detection, widely used for PPE-compliance detection models.",
+      "size": "7,041 images",
+      "license": "Public domain (CC0)",
+      "year": 2019,
+      "source": "Northeastern University / Roboflow",
+      "tags": [
+        "images",
+        "safety",
+        "ppe",
+        "object-detection"
+      ],
+      "links": {
+        "download": "https://public.roboflow.com/object-detection/hard-hat-workers",
+        "website": "https://public.roboflow.com/object-detection/hard-hat-workers"
+      }
+    },
+    {
+      "name": "Structured3D",
+      "category": "synthetic",
+      "description": "Photo-realistic synthetic dataset of 3,500 house designs with 21,835 rooms, providing structured 3D annotations (planes, lines, junctions, layouts) plus panoramic renderings.",
+      "size": "3,500 houses, 21,835 rooms, 196k renderings",
+      "license": "Custom (non-commercial research, agreement)",
+      "year": 2020,
+      "source": "Kujiale / ShanghaiTech University",
+      "tags": [
+        "synthetic",
+        "layout",
+        "panorama",
+        "indoor"
+      ],
+      "links": {
+        "download": "https://structured3d-dataset.org/",
+        "website": "https://structured3d-dataset.org/",
+        "paper": "https://arxiv.org/abs/1908.00222"
+      }
+    },
+    {
+      "name": "3D-FRONT & 3D-FUTURE",
+      "category": "synthetic",
+      "description": "18,968 professionally designed synthetic house scenes furnished with high-quality textured 3D furniture models (3D-FUTURE), released by Alibaba for indoor scene research.",
+      "size": "18,968 rooms-scenes, 13,151 furniture CAD models",
+      "license": "Custom (free for research, registration)",
+      "year": 2021,
+      "source": "Alibaba",
+      "tags": [
+        "synthetic",
+        "interior",
+        "furniture",
+        "scene-synthesis"
+      ],
+      "links": {
+        "download": "https://tianchi.aliyun.com/specials/promotion/alibaba-3d-scene-dataset",
+        "website": "https://tianchi.aliyun.com/specials/promotion/alibaba-3d-scene-dataset",
+        "paper": "https://arxiv.org/abs/2011.09127"
+      }
+    },
+    {
+      "name": "InteriorNet",
+      "category": "synthetic",
+      "description": "Mega-scale synthetic RGB-D and video dataset rendered from ~22 million professionally designed interior layouts with 1M+ furniture CAD models.",
+      "size": "22M layouts, 5M images",
+      "license": "Custom (research)",
+      "year": 2018,
+      "source": "Imperial College London / Kujiale",
+      "tags": [
+        "synthetic",
+        "rgb-d",
+        "interior"
+      ],
+      "links": {
+        "download": "https://interiornet.org/",
+        "website": "https://interiornet.org/",
+        "paper": "https://arxiv.org/abs/1809.00716"
+      }
+    },
+    {
+      "name": "ProcTHOR-10K",
+      "category": "synthetic",
+      "description": "10,000 procedurally generated, fully interactive 3D houses for embodied AI, sampled from the ProcTHOR house-generation framework (AI2-THOR compatible).",
+      "size": "10,000 houses",
+      "license": "Apache 2.0",
+      "year": 2022,
+      "source": "Allen Institute for AI",
+      "tags": [
+        "synthetic",
+        "procedural",
+        "embodied-ai"
+      ],
+      "links": {
+        "download": "https://github.com/allenai/procthor",
+        "website": "https://procthor.allenai.org/",
+        "paper": "https://arxiv.org/abs/2206.06994"
+      }
+    },
+    {
+      "name": "HouseExpo",
+      "category": "synthetic",
+      "description": "Large-scale 2D indoor layout dataset with 35,126 house layouts (252,550 rooms) plus a simulation toolkit for robot navigation and mapping research.",
+      "size": "35,126 layouts, 252,550 rooms",
+      "license": "MIT",
+      "year": 2019,
+      "source": "HKUST",
+      "tags": [
+        "layout",
+        "2d",
+        "robotics",
+        "synthetic"
+      ],
+      "links": {
+        "download": "https://github.com/TeaganLi/HouseExpo",
+        "website": "https://github.com/TeaganLi/HouseExpo",
+        "paper": "https://arxiv.org/abs/1903.09845"
+      }
+    },
+    {
+      "name": "IFCNet",
+      "category": "benchmark",
+      "description": "Benchmark of 19,613 single-entity IFC objects extracted from real IFC models for BIM object classification; the curated IFCNetCore subset is directly downloadable as multi-view PNG, PLY point cloud and NPZ mesh packages.",
+      "size": "19,613 objects",
+      "license": "Unspecified",
+      "year": 2021,
+      "source": "RWTH Aachen University (E3D)",
+      "tags": [
+        "ifc",
+        "classification",
+        "ml",
+        "benchmark"
+      ],
+      "links": {
+        "download": "https://ifcnet.e3d.rwth-aachen.de/",
+        "website": "https://github.com/RWTH-E3D/ifcnet-models",
+        "paper": "https://arxiv.org/abs/2106.09712"
+      }
+    },
+    {
+      "name": "BIMNet",
+      "category": "benchmark",
+      "description": "openBIM-based scan-to-BIM benchmark: 25 real-world indoor scans (116.5M points, 382 rooms, 8,710 m²) each paired with a ground-truth IFC model, plus an IFC-based evaluation framework. Access requires approved Matterport3D terms forwarded to the maintainers.",
+      "size": "25 scans, 116.5M points, 382 rooms",
+      "license": "Custom (Matterport3D ToU + request); MIT (authors' part)",
+      "year": 2025,
+      "source": "Tsinghua University (THU CBIMS)",
+      "tags": [
+        "ifc",
+        "scan-to-bim",
+        "point-cloud",
+        "benchmark"
+      ],
+      "links": {
+        "download": "https://thucbims.github.io/bimnet.thucbims.github.io/",
+        "website": "https://thucbims.github.io/bimnet.thucbims.github.io/",
+        "paper": "https://doi.org/10.1016/j.autcon.2025.106096"
+      }
+    },
+    {
+      "name": "BuildingNet",
+      "category": "benchmark",
+      "description": "2,000 3D building exterior models with 513k labeled mesh components across 31 part categories (windows, roofs, walls…), for part segmentation of building meshes.",
+      "size": "2,000 buildings, 513k components",
+      "license": "Custom (research, registration)",
+      "year": 2021,
+      "source": "UMass Amherst et al.",
+      "tags": [
+        "mesh",
+        "segmentation",
+        "exterior",
+        "benchmark"
+      ],
+      "links": {
+        "download": "https://buildingnet.org/",
+        "website": "https://buildingnet.org/",
+        "paper": "https://arxiv.org/abs/2110.04955"
+      }
+    },
+    {
+      "name": "UrbanScene3D",
+      "category": "benchmark",
+      "description": "Large-scale urban scene dataset with over 128 km² of real and synthetic cities as meshes, point clouds and aerial imagery, for urban reconstruction and path planning.",
+      "size": "128 km², 16 scenes",
+      "license": "Custom (research)",
+      "year": 2022,
+      "source": "Shenzhen University (VCC)",
+      "tags": [
+        "urban",
+        "mesh",
+        "aerial",
+        "reconstruction"
+      ],
+      "links": {
+        "download": "https://vcc.tech/UrbanScene3D",
+        "website": "https://vcc.tech/UrbanScene3D",
+        "paper": "https://arxiv.org/abs/2107.04286"
+      }
+    },
+    {
+      "name": "TUM GNI Open IFC Models",
+      "category": "ifc",
+      "description": "Open collection of IFC building models from TUM BIM Fundamentals student projects, curated and published by the TUM Georg Nemetschek Institute for openBIM and AI research; also the basis of the ifc-bench benchmark.",
+      "size": "Dozens of IFC models from student building projects",
+      "license": "CC BY 4.0",
+      "year": 2025,
+      "source": "TU Munich, Georg Nemetschek Institute",
+      "tags": [
+        "ifc",
+        "student-projects",
+        "ai",
+        "open-data"
+      ],
+      "links": {
+        "download": "https://zenodo.org/records/19722012",
+        "website": "https://zenodo.org/records/19722012"
+      }
+    },
+    {
+      "name": "ResBIM-IFC",
+      "category": "ifc",
+      "description": "IFC-format release of the ResBIM synthetic residential-BIM dataset: ~600 parametric residential-unit building models exported to the open IFC standard for use in openBIM workflows and tools. The original ResBIM (by Liang, Yabuki & Fukuda) pairs each parametric 3D BIM model with an annotated 2D floor plan, generated via CNN and rule-based methods for BIM automation and 2D-to-BIM reconstruction research.",
+      "size": "~600 IFC models, ~6.7 GB",
+      "license": "MIT",
+      "year": 2025,
+      "source": "tsesterh (Hugging Face), from ResBIM by Liang, Yabuki & Fukuda",
+      "tags": [
+        "ifc",
+        "residential",
+        "synthetic",
+        "2d-to-bim"
+      ],
+      "links": {
+        "download": "https://huggingface.co/datasets/tsesterh/ResBIM-IFC",
+        "website": "https://github.com/RogerLiang0725/ResBIM",
+        "paper": "https://doi.org/10.1016/j.autcon.2025.106584"
+      }
+    }
+  ]
+}
