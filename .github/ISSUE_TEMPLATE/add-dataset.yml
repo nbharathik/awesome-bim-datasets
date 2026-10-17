@@ -1,0 +1,43 @@
+name: Suggest a dataset
+description: Suggest an open dataset for BIM or the built environment.
+title: "[Dataset] "
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Dataset name
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Link
+      description: Official project page, DOI or repository.
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - BIM & IFC Models
+        - Point Clouds & Scan-to-BIM
+        - Urban Point Clouds & Meshes
+        - Floorplans
+        - 3D City Models & Footprints
+        - Energy & Building Performance
+        - Construction & Inspection
+        - Synthetic Indoor Scenes
+        - BIM Benchmarks & Machine Learning
+    validations:
+      required: true
+  - type: input
+    id: license
+    attributes:
+      label: License
+      placeholder: e.g. CC BY 4.0, or Not specified
+  - type: input
+    id: description
+    attributes:
+      label: Short description
+      placeholder: e.g. 120 IFC models of school buildings with room labels

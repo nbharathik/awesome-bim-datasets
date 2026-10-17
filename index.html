@@ -1,640 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Awesome BIM Datasets</title>
-<meta name="description" content="A curated catalog of open datasets for Building Information Modeling and the built environment.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231a3a6b'/%3E%3Cpath d='M9 23V11l7-4 7 4v12' fill='none' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M13 23v-6h6v6' fill='none' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="description" content="A searchable, curated list of open datasets for Building Information Modeling (BIM) and the built environment.">
+<meta property="og:title" content="Awesome BIM Datasets">
+<meta property="og:description" content="Search open datasets for BIM, IFC, point clouds, floorplans, city models, energy and construction.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232457c5'/%3E%3Cpath d='M9 23V11l7-4 7 4v12M13 23v-6h6v6' fill='none' stroke='white' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f5f6f8;
-    --surface: #ffffff;
-    --bg-subtle: #f0f2f5;
-    --bg-hover: #e9ecf1;
-    --text: #111827;
-    --text-secondary: #4b5563;
-    --text-tertiary: #9ca3af;
-    --border: #e5e7eb;
-    --border-strong: #d1d5db;
-    --accent: #4059c9;
-    --accent-strong: #3348ad;
-    --accent-soft: #eef1fc;
-    --accent-border: #c3cdf1;
-    --link: #4059c9;
-    --focus-ring: rgba(64, 89, 201, 0.18);
-    --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.05);
-    --shadow-md: 0 2px 8px rgba(17, 24, 39, 0.08), 0 1px 2px rgba(17, 24, 39, 0.04);
+    --bg: #fff; --surface: #fff; --ink: #17212b; --muted: #5a6573; --faint: #8a94a1;
+    --line: #e3e6eb; --accent: #2457c5; --accent-soft: #eaf0fc; color-scheme: light;
   }
-  :root[data-theme="dark"] {
-    --bg: #0d1117;
-    --surface: #161b22;
-    --bg-subtle: #1c2128;
-    --bg-hover: #21262d;
-    --text: #e6edf3;
-    --text-secondary: #8b949e;
-    --text-tertiary: #6e7681;
-    --border: #30363d;
-    --border-strong: #484f58;
-    --accent: #8fa2f5;
-    --accent-strong: #a7b6f8;
-    --accent-soft: #1a2040;
-    --accent-border: #354070;
-    --link: #8fa2f5;
-    --focus-ring: rgba(143, 162, 245, 0.2);
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.4);
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f141a; --surface: #141b23; --ink: #e7ecf2; --muted: #9aa5b3; --faint: #6f7a88;
+      --line: #25303b; --accent: #86a9ff; --accent-soft: #18233a; color-scheme: dark;
+    }
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: var(--bg); color: var(--text);
-    line-height: 1.5; font-size: 14.5px;
-    -webkit-font-smoothing: antialiased;
-  }
-  a { color: var(--link); text-decoration: none; transition: color .12s; }
-  a:hover { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 2px; }
-  svg { display: block; }
-  .container { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+  [data-cat=ifc] { --c: #3b6fd8; } [data-cat=pointcloud] { --c: #0f9aa6; } [data-cat=urban] { --c: #4f9a3a; }
+  [data-cat=floorplan] { --c: #c48a12; } [data-cat=city] { --c: #7c5cd6; } [data-cat=energy] { --c: #d4483f; }
+  [data-cat=construction] { --c: #e07b22; } [data-cat=synthetic] { --c: #c04fb0; } [data-cat=benchmark] { --c: #5d6b7e; }
 
-  /* Header */
-  .site-header { background: var(--surface); border-bottom: 1px solid var(--border); }
-  .header-row {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 16px; padding: 20px 0 16px;
-  }
-  .brand h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
-  .brand .intro { color: var(--text-secondary); font-size: 13px; margin-top: 4px; }
-  .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-  .icon-btn, .gh-btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-    height: 32px; border-radius: 6px; border: 1px solid var(--border);
-    background: var(--surface); color: var(--text-secondary);
-    font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
-    transition: color .12s, border-color .12s, background .12s;
-  }
-  .icon-btn { width: 32px; }
-  .gh-btn { padding: 0 12px; }
-  .icon-btn:hover, .gh-btn:hover {
-    color: var(--text); border-color: var(--border-strong);
-    background: var(--bg-subtle); text-decoration: none;
-  }
-  .icon-btn svg, .gh-btn svg { width: 15px; height: 15px; }
-  #theme-toggle .icon-sun { display: none; }
-  :root[data-theme="dark"] #theme-toggle .icon-sun { display: block; }
-  :root[data-theme="dark"] #theme-toggle .icon-moon { display: none; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 "Archivo", system-ui, sans-serif; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button, input, select { font: inherit; color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
 
-  /* Toolbar */
-  .toolbar {
-    position: sticky; top: 0; z-index: 30;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-  }
-  .toolbar-inner { position: relative; }
-  .toolbar-row {
-    display: flex; gap: 8px; align-items: center; padding: 10px 0;
-    flex-wrap: wrap;
-  }
-  .toolbar-left { display: flex; align-items: center; gap: 8px; flex: 1; }
-  .result-count { font-size: 13px; color: var(--text-tertiary); white-space: nowrap; }
-  .toolbar-right { display: flex; align-items: center; gap: 8px; }
+  header.wrap { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 32px; padding-top: 48px; padding-bottom: 28px; }
+  h1 { margin: 0; font-size: clamp(30px, 5vw, 44px); line-height: 1.05; font-weight: 750; font-stretch: 118%; letter-spacing: -0.015em; }
+  header p { margin: 10px 0 0; color: var(--muted); font-size: 17px; max-width: 60ch; }
+  .actions { display: flex; gap: 10px; }
+  .btn { display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); font-size: 14px; font-weight: 500; }
+  .btn:hover { border-color: var(--faint); text-decoration: none; }
+  .btn.primary { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 
-  .view-switch {
-    display: inline-flex; gap: 2px; padding: 2px;
-    border: 1px solid var(--border); border-radius: 6px;
-    background: var(--bg-subtle); flex-shrink: 0;
-  }
-  .view-switch button {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 32px; height: 26px; border: none; background: none; border-radius: 4px;
-    color: var(--text-tertiary); cursor: pointer;
-    transition: background .12s, color .12s;
-  }
-  .view-switch button svg { width: 14px; height: 14px; }
-  .view-switch button:hover { color: var(--text-secondary); background: var(--bg-hover); }
-  .view-switch button.active { background: var(--surface); color: var(--accent); box-shadow: var(--shadow-sm); }
+  .bar { position: sticky; top: 0; z-index: 2; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .bar .wrap { display: flex; gap: 10px; padding-top: 12px; padding-bottom: 12px; }
+  #q { flex: 1; min-width: 0; height: 42px; padding: 0 14px 0 40px; font-size: 16px; background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%238a94a1' stroke-width='2' stroke-linecap='round' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") no-repeat 14px center; border: 1px solid var(--line); border-radius: 10px; }
+  #q:focus, #sort:focus { border-color: var(--accent); outline: 3px solid var(--accent-soft); outline-offset: 0; }
+  .seg { display: flex; padding: 3px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+  .seg button { display: flex; align-items: center; gap: 6px; padding: 0 12px; border: 0; border-radius: 7px; background: none; color: var(--muted); font-size: 14px; cursor: pointer; }
+  .seg button[aria-pressed=true] { background: var(--accent-soft); color: var(--accent); }
+  #sort { height: 42px; padding: 0 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); font-size: 14px; }
 
-  .filter-btn {
-    display: inline-flex; align-items: center; gap: 7px;
-    height: 32px; padding: 0 12px; border-radius: 6px;
-    border: 1px solid var(--border); background: var(--bg-subtle);
-    font-family: inherit; font-size: 13px; font-weight: 500; color: var(--text-secondary);
-    cursor: pointer; flex-shrink: 0;
-    transition: color .12s, border-color .12s, background .12s;
-  }
-  .filter-btn:hover { color: var(--text); border-color: var(--border-strong); background: var(--bg-hover); }
-  .filter-btn svg { width: 13px; height: 13px; }
-  .filter-btn .badge {
-    min-width: 16px; height: 16px; padding: 0 4px; border-radius: 3px;
-    background: var(--accent); color: #fff; font-size: 10.5px; font-weight: 600;
-    display: none; align-items: center; justify-content: center;
-  }
-  .filter-btn.has-filters { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-  .filter-btn.has-filters .badge { display: inline-flex; }
+  .cats { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 20px; }
+  .cats button { flex: none; display: inline-flex; align-items: center; gap: 7px; height: 32px; white-space: nowrap; padding: 0 12px; border: 1px solid var(--line); border-radius: 8px; background: none; color: var(--muted); font-size: 13.5px; cursor: pointer; }
+  .cats button:hover { color: var(--ink); border-color: var(--faint); }
+  .cats button[aria-pressed=true] { color: var(--ink); border-color: var(--ink); }
+  .n { color: var(--faint); font-weight: 400; font-variant-numeric: tabular-nums; }
+  .dot { flex: none; width: 8px; height: 8px; border-radius: 2px; background: var(--c); }
+  .count { margin: 18px 0 0; color: var(--muted); font-size: 14px; }
 
-  /* Filter panel */
-  .filter-panel {
-    display: none; position: absolute; top: calc(100% + 8px); right: 0;
-    width: min(640px, calc(100vw - 32px)); z-index: 40;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 8px; box-shadow: var(--shadow-md); padding: 18px 20px 20px;
-    transform-origin: top right;
-  }
-  .filter-panel.open { display: block; animation: panel-in .12s ease-out; }
-  @keyframes panel-in {
-    from { opacity: 0; transform: translateY(-4px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .fp-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-  .fp-head .title { font-size: 13px; font-weight: 600; }
-  .fp-clear {
-    background: none; border: none; font-family: inherit; font-size: 12.5px;
-    color: var(--link); cursor: pointer; padding: 0;
-  }
-  .fp-group { margin-bottom: 14px; }
-  .fp-group:last-child { margin-bottom: 0; }
-  .fp-label {
-    font-size: 10.5px; font-weight: 600; text-transform: uppercase;
-    letter-spacing: 0.06em; color: var(--text-tertiary); margin-bottom: 7px;
-  }
-  .fp-chips { display: flex; flex-wrap: wrap; gap: 5px; }
-  .fp-chip {
-    padding: 4px 10px; border-radius: 4px; font-family: inherit; font-size: 12.5px;
-    font-weight: 500; border: 1px solid var(--border-strong);
-    background: var(--surface); color: var(--text-secondary); cursor: pointer;
-    transition: border-color .12s, color .12s, background .12s;
-  }
-  .fp-chip:hover { border-color: var(--accent-border); color: var(--accent); background: var(--accent-soft); }
-  .fp-chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-  :root[data-theme="dark"] .fp-chip.active { color: #0d1117; }
-  .fp-row { display: flex; gap: 12px; flex-wrap: wrap; }
-  .fp-row .fp-group { flex: 1 1 160px; margin-bottom: 0; }
-  .fp-select {
-    width: 100%; height: 32px; font-family: inherit; font-size: 13px; color: var(--text);
-    background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 6px;
-    padding: 0 8px; outline: none; cursor: pointer;
-    transition: border-color .12s;
-  }
-  .fp-select:hover { border-color: var(--border-strong); }
-  .fp-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--focus-ring); }
+  section { margin-top: 36px; }
+  h2 { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; font-size: 20px; font-weight: 650; font-stretch: 110%; letter-spacing: -0.01em; }
+  h2 .dot { width: 10px; height: 10px; }
+  h2 .n { font-size: 15px; }
+  h3 { grid-area: name; margin: 0; font-size: 16px; font-weight: 600; }
+  h3 a { color: var(--ink); }
+  h3 a:hover { color: var(--accent); }
+  .cat { display: flex; align-items: center; gap: 6px; margin-top: 2px; color: var(--muted); font-size: 13px; font-weight: 400; }
+  .desc { grid-area: desc; margin: 2px 0 0; color: var(--muted); }
+  .lic, .year { color: var(--muted); font-size: 14px; }
+  .lic { grid-area: lic; }
+  .year { grid-area: year; text-align: right; font-variant-numeric: tabular-nums; }
+  .links { grid-area: links; display: flex; justify-content: flex-end; gap: 14px; font-size: 14px; font-weight: 500; }
 
-  /* Main — ID selector overrides .container padding shorthand */
-  #main { padding-top: 24px; padding-bottom: 56px; }
-  .group-heading {
-    font-size: 13px; font-weight: 700; color: var(--text-secondary);
-    text-transform: uppercase; letter-spacing: 0.05em;
-    margin: 32px 0 10px;
-  }
-  .group-heading:first-child { margin-top: 0; }
+  .list .items { border-bottom: 1px solid var(--line); }
+  .list .item { display: grid; grid-template-columns: minmax(0, 1fr) 13rem 3rem 9rem; grid-template-areas: "name lic year links" "desc lic year links"; column-gap: 24px; padding: 14px 0; border-top: 1px solid var(--line); }
+  .gallery .items { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .gallery .item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto 1fr auto; grid-template-areas: "name name name" "desc desc desc" "year lic links"; row-gap: 8px; padding: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+  .gallery .item:hover { border-color: var(--faint); }
+  .gallery .desc { font-size: 14.5px; }
+  .gallery .lic, .gallery .year { align-self: end; font-size: 13px; text-align: left; }
+  .gallery .year:not(:empty) { margin-right: 12px; }
+  .gallery .links { align-self: end; margin-left: 12px; }
 
-  /* License text */
-  .lic-text { font-size: 12.5px; color: var(--text-secondary); white-space: nowrap; }
-
-  .links-row { display: flex; gap: 14px; font-size: 13px; white-space: nowrap; }
-  .links-row a { font-weight: 500; }
-
-  /* Table view */
-  .table-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 6px; overflow: hidden;
-  }
-  .table-scroll { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; }
-  thead th {
-    text-align: left; font-size: 12px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.05em;
-    color: var(--text-secondary); padding: 11px 16px;
-    border-bottom: 1px solid var(--border); white-space: nowrap;
-    background: var(--bg-subtle);
-  }
-  tbody td { padding: 11px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-  tbody tr:last-child td { border-bottom: none; }
-  tbody tr { transition: background .1s; }
-  tbody tr:hover { background: var(--bg-hover); }
-  .t-group td {
-    background: var(--bg-subtle); font-size: 12px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.05em;
-    color: var(--text-secondary); padding: 9px 16px;
-    border-bottom: 1px solid var(--border);
-  }
-  tbody tr.t-group:hover { background: var(--bg-subtle); }
-  .cell-name a { color: var(--text); font-weight: 600; font-size: 13.5px; }
-  .cell-name a:hover { color: var(--accent); text-decoration: none; }
-  .cell-cat { color: var(--text-secondary); font-size: 13px; white-space: nowrap; }
-
-  /* List view */
-  .list-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 6px; overflow: hidden;
-  }
-  .list-row {
-    display: flex; align-items: center; gap: 16px;
-    padding: 11px 18px; border-bottom: 1px solid var(--border);
-    transition: background .1s;
-  }
-  .list-row:last-child { border-bottom: none; }
-  .list-row:hover { background: var(--bg-hover); }
-  .list-main { flex: 1 1 auto; min-width: 0; }
-  .list-name a { color: var(--text); font-weight: 600; font-size: 13.5px; }
-  .list-name a:hover { color: var(--accent); text-decoration: none; }
-  .list-sub { font-size: 12px; color: var(--text-tertiary); margin-top: 1px; }
-  .list-row .lic-text { flex-shrink: 0; }
-  .list-row .links-row { flex-shrink: 0; }
-
-  /* Gallery view */
-  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
-  .card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 9px;
-    transition: border-color .15s;
-  }
-  .card:hover { border-color: var(--border-strong); }
-  .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-  .card-cat { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-tertiary); }
-  .card-year { font-size: 11.5px; color: var(--text-tertiary); }
-  .card-name { font-size: 14px; font-weight: 650; letter-spacing: -0.01em; }
-  .card-name a { color: var(--text); }
-  .card-name a:hover { color: var(--accent); text-decoration: none; }
-  .card-desc {
-    font-size: 12.5px; color: var(--text-secondary); flex: 1;
-    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
-  }
-  .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-
-  .empty {
-    text-align: center; color: var(--text-tertiary); padding: 60px 0;
-    background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
-  }
-  .empty button { background: none; border: none; color: var(--link); cursor: pointer; font-family: inherit; font-size: 13.5px; padding: 0; }
-
-  /* Footer */
-  .site-footer { border-top: 1px solid var(--border); padding: 20px 0 40px; font-size: 12.5px; color: var(--text-tertiary); }
-  .site-footer p { max-width: 780px; margin-bottom: 5px; }
+  .cats button.none { opacity: 0.45; }
+  .empty { padding: 48px 0; color: var(--muted); text-align: center; line-height: 1.9; }
+  .empty button { padding: 0; border: 0; background: none; color: var(--accent); cursor: pointer; }
+  footer.wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; margin-top: 56px; padding-top: 20px; padding-bottom: 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
   @media (max-width: 720px) {
-    .container { padding: 0 16px; }
-    .header-row { flex-wrap: wrap; }
-    .filter-panel { right: auto; left: 0; }
-    .list-row { flex-wrap: wrap; gap: 8px; }
+    header.wrap { padding-top: 28px; }
+    .seg span { display: none; }
+    .cats { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+    .list .item { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name year" "desc desc" "lic links"; row-gap: 4px; }
   }
 </style>
 </head>
 <body>
-
-<header class="site-header">
-  <div class="container">
-    <div class="header-row">
-      <div class="brand">
-        <h1>Awesome BIM Datasets</h1>
-        <p class="intro">A curated catalog of open datasets for Building Information Modeling and the built environment.</p>
-      </div>
-      <div class="header-actions">
-        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle color theme">
-          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        </button>
-        <a class="gh-btn" href="https://github.com/nbharathik/awesome-bim-datasets" target="_blank" rel="noopener">
-          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-          GitHub
-        </a>
-      </div>
-    </div>
+<header class="wrap">
+  <div>
+    <h1>Awesome BIM Datasets</h1>
+    <p>Open datasets for BIM and the built environment, from IFC models and building scans to city models and energy data.</p>
+  </div>
+  <div class="actions">
+    <a class="btn" href="https://github.com/nbharathik/awesome-bim-datasets">GitHub</a>
+    <a class="btn primary" href="https://github.com/nbharathik/awesome-bim-datasets/issues/new?template=add-dataset.yml">Suggest a dataset</a>
   </div>
 </header>
-
-<div class="toolbar">
-  <div class="container toolbar-inner">
-    <div class="toolbar-row">
-      <div class="toolbar-left">
-        <span class="result-count" id="result-count"></span>
-      </div>
-      <div class="toolbar-right">
-        <div class="view-switch" role="group" aria-label="View mode">
-          <button type="button" data-view="table" title="Table view" aria-label="Table view">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 5h18M3 10h18M3 15h18M3 20h18"/></svg>
-          </button>
-          <button type="button" data-view="list" title="List view" aria-label="List view">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="4" cy="6" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.2" fill="currentColor" stroke="none"/></svg>
-          </button>
-          <button type="button" data-view="gallery" title="Gallery view" aria-label="Gallery view">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>
-          </button>
-        </div>
-
-        <button class="filter-btn" id="filter-btn" type="button" aria-expanded="false" aria-controls="filter-panel">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18l-7 8v5.5l-4 2V13L3 5z"/></svg>
-          Filters
-          <span class="badge" id="filter-count">0</span>
-        </button>
-      </div>
+<div class="bar">
+  <div class="wrap">
+    <label class="sr" for="q">Search datasets</label>
+    <input id="q" type="search" placeholder="Search by name, format, task or license" autocomplete="off">
+    <div class="seg" role="group" aria-label="View">
+      <button type="button" data-view="list"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>List</span></button>
+      <button type="button" data-view="gallery"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg><span>Gallery</span></button>
     </div>
-
-    <div class="filter-panel" id="filter-panel" role="region" aria-label="Advanced filters">
-      <div class="fp-head">
-        <span class="title">Advanced filters</span>
-        <button class="fp-clear" id="clear-filters" type="button">Reset all</button>
-      </div>
-      <div class="fp-group">
-        <div class="fp-label">Category</div>
-        <div class="fp-chips" id="cat-chips"></div>
-      </div>
-      <div class="fp-group">
-        <div class="fp-label">License</div>
-        <div class="fp-chips" id="lic-chips"></div>
-      </div>
-      <div class="fp-row">
-        <div class="fp-group">
-          <div class="fp-label">Published</div>
-          <select class="fp-select" id="year-filter">
-            <option value="">Any year</option>
-            <option value="2023">2023 or later</option>
-            <option value="2020">2020 or later</option>
-            <option value="2015">2015 or later</option>
-          </select>
-        </div>
-        <div class="fp-group">
-          <div class="fp-label">Tag</div>
-          <select class="fp-select" id="tag-filter">
-            <option value="">Any tag</option>
-          </select>
-        </div>
-        <div class="fp-group">
-          <div class="fp-label">Sort by</div>
-          <select class="fp-select" id="sort">
-            <option value="category">Category</option>
-            <option value="name">Name</option>
-            <option value="year-desc">Newest</option>
-            <option value="year-asc">Oldest</option>
-          </select>
-        </div>
-      </div>
-    </div>
+    <label class="sr" for="sort">Sort</label>
+    <select id="sort"><option value="az">A-Z</option><option value="new">Newest</option></select>
   </div>
 </div>
-
-<main class="container" id="main"></main>
-
-<footer class="site-footer">
-  <div class="container">
-    <p>Licenses shown are as stated by the dataset providers. Always verify current terms at the source before use, especially for commercial projects.</p>
-    <p>Missing a dataset or found a dead link? <a href="https://github.com/nbharathik/awesome-bim-datasets/issues" target="_blank" rel="noopener">Open an issue</a> or submit a pull request.</p>
-  </div>
+<main class="wrap">
+  <div class="cats" id="cats" role="group" aria-label="Category"></div>
+  <p class="count" id="count" aria-live="polite"></p>
+  <div id="list"><noscript><p class="empty">Turn on JavaScript, or browse the <a href="https://github.com/nbharathik/awesome-bim-datasets#readme">list on GitHub</a>.</p></noscript></div>
+</main>
+<footer class="wrap">
+  <span>Licenses are shown as stated by each provider. Check the source before use.</span>
+  <span><a href="https://github.com/nbharathik/awesome-bim-datasets/blob/main/data/datasets.json">Edit the data on GitHub</a>. Released under CC0.</span>
 </footer>
-
 <script>
-const DATA = /*__DATASETS_START__*/{"categories":[{"id":"ifc","name":"IFC Model Collections","description":"Collections of IFC (Industry Foundation Classes) building models, the open standard for BIM data exchange."},{"id":"pointcloud","name":"Point Clouds & Scan-to-BIM","description":"Laser-scanned and RGB-D point cloud datasets of buildings and indoor spaces, used for scan-to-BIM, semantic segmentation, and as-built modeling."},{"id":"floorplan","name":"Floorplans","description":"2D floorplan datasets (raster, vector, CAD) for layout analysis, plan generation, and plan-to-BIM reconstruction."},{"id":"city","name":"3D City Models","description":"CityGML / CityJSON and other large-scale semantic 3D city and building datasets."},{"id":"energy","name":"Energy & Building Performance","description":"Building energy models, meter data, and performance datasets for BEM and analytics."},{"id":"construction","name":"Construction & Site","description":"Datasets captured on construction sites, imagery, SLAM sequences, equipment and safety detection."},{"id":"synthetic","name":"Synthetic Indoor Scenes","description":"Synthetic, procedurally generated or artist-designed indoor scene datasets useful for pre-training and layout research."},{"id":"benchmark","name":"Benchmarks & Machine Learning","description":"BIM-specific benchmarks and ML-ready datasets (classification, segmentation, retrieval on BIM/IFC data)."}],"related":[{"name":"Awesome CityGML","url":"https://github.com/OloOcki/awesome-citygml","note":"The definitive list of open semantic 3D city models, 215M+ freely available buildings across 22 countries, with per-dataset licenses. Go here for every national/city LoD2 dataset beyond the highlights listed above."},{"name":"awesome-bim","url":"https://github.com/SikongSphere/awesome-bim","note":"Curated list of BIM software, libraries and tools, with a small open-dataset section."},{"name":"awesome-point-cloud-analysis","url":"https://github.com/Yochengliu/awesome-point-cloud-analysis","note":"Papers and datasets for point cloud analysis broadly, beyond the building domain."}],"datasets":[{"name":"buildingSMART Sample Test Files","category":"ifc","description":"buildingSMART International's official IFC sample-file repository, currently holding PCERT certification discipline models (architecture, HVAC, structural, bridge, rail, road) for IFC 4 and IFC 4.3. Older community content moved to the Community Sample Test Files repo.","size":"PCERT models for 2 schema versions","license":"CC BY 4.0","source":"buildingSMART International","tags":["ifc","official","test-files","certification"],"links":{"download":"https://github.com/buildingSMART/Sample-Test-Files","website":"https://technical.buildingsmart.org/standards/ifc/ifc-examples/"}},{"name":"buildingSMART Community Sample Test Files","category":"ifc","description":"Community-maintained successor collection of IFC, BCF and IDS sample/test files organized by schema version (IFC 2x3, IFC 4, IFC 4.3 RC archive), includes a full mirror of the Schependomlaan dataset. Note: not official examples, and many files intentionally fail validation.","size":"Hundreds of files across 3 schema folders","license":"CC BY 4.0","year":2024,"source":"buildingSMART community","tags":["ifc","bcf","ids","test-files"],"links":{"download":"https://github.com/buildingsmart-community/Community-Sample-Test-Files","website":"https://github.com/buildingsmart-community/Community-Sample-Test-Files"}},{"name":"BIMData IFC Files Collection","category":"ifc","description":"Curated index of ~100 downloadable IFC files (40 BIM models, 3.7 GB) aggregated from public sources, DURAARK (paired IFC + E57 scans), the Open IFC Model Repository, NIBS Common BIM Files, BIMCollab and more, with direct per-file download links and sizes.","size":"100 IFC files, ~3.7 GB","license":"Varies per upstream source","source":"BIMData.io","tags":["ifc","index","aggregated"],"links":{"download":"https://github.com/bimdata/BIMData-Research-and-Development/blob/master/pages/IFC_FILES.md","website":"https://github.com/bimdata/BIMData-Research-and-Development/blob/master/pages/IFC_FILES.md"}},{"name":"buildingSMART IFC 4.3 Sample Models","category":"ifc","description":"Official sample models for IFC 4.3, covering infrastructure features: alignments, linear positioning, GIS referencing, structural analysis models, construction scheduling and geometry examples.","size":"12 example sets","license":"Unspecified","year":2023,"source":"buildingSMART International","tags":["ifc","ifc4.3","infrastructure","official"],"links":{"download":"https://github.com/buildingSMART/IFC4.3.x-sample-models","website":"https://github.com/buildingSMART/IFC4.3.x-sample-models"}},{"name":"IFC Schependomlaan","category":"ifc","description":"Complete lifecycle dataset of a real Dutch housing project (Nijmegen): design IFC + native Archicad models, as-planned models per construction week, subcontractor models, point clouds, schedules, a process-mining event log and drone footage. The de-facto standard openBIM research dataset. Note: the often-cited openBIMstandards/DataSetSchependomlaan repo is a dead redirect, use the archive repo (or the Community Sample Test Files mirror).","size":"~210 MB: IFC models, point clouds, event logs, drone media","license":"CC BY 4.0","year":2016,"source":"TU Eindhoven / Hendriks Bouw en Ontwikkeling / openBIMstandards","tags":["ifc","as-built","4d","point-cloud","real-project","event-log"],"links":{"download":"https://github.com/openBIMstandards/Archive-DataSetSchependomlaan","website":"https://github.com/openBIMstandards/Archive-DataSetSchependomlaan"}},{"name":"Common BIM Files (Duplex, Office, Clinic)","category":"ifc","description":"The classic set of openly shared BIM test models from the buildingSMART alliance, Duplex Apartment, Office Building and Medical Clinic, in IFC and native formats with COBie spreadsheets; widely used in tutorials and research.","size":"4 model sets (IFC + RVT + COBie)","license":"Free to use (no formal license)","year":2012,"source":"NIBS / buildingSMART alliance","tags":["ifc","revit","cobie","classic"],"links":{"download":"https://www.wbdg.org/bim/cobie/common-bim-files","website":"https://www.wbdg.org/bim/cobie/common-bim-files"}},{"name":"Open IFC Model Repository","category":"ifc","description":"One of the first public repositories of IFC building models (~182 files), a mix of real and test models used widely in early IFC research; also mirrored on Kaggle as 'Building Information Model IFC File Examples'.","size":"~182 IFC files","license":"Unspecified","year":2008,"source":"University of Auckland","tags":["ifc","repository"],"links":{"website":"http://openifcmodel.cs.auckland.ac.nz/"}},{"name":"S3DIS (Stanford 2D-3D-Semantics)","category":"pointcloud","description":"Indoor point clouds of 6 large office areas (271 rooms) with per-point semantic labels for 13 classes, plus registered RGB, depth and surface normals, the standard benchmark for indoor semantic segmentation.","size":"6 areas, 271 rooms, ~700M points","license":"Custom (research use, request form)","year":2016,"source":"Stanford University","tags":["point-cloud","semantic-segmentation","indoor","benchmark"],"links":{"download":"http://buildingparser.stanford.edu/dataset.html","website":"http://buildingparser.stanford.edu/dataset.html","paper":"https://arxiv.org/abs/1702.01105"}},{"name":"ScanNet","category":"pointcloud","description":"RGB-D video dataset of 1,513 indoor scans across 707 spaces with 3D camera poses, surface reconstructions and instance-level semantic annotations; the dominant benchmark for 3D indoor scene understanding.","size":"1,513 scans, 2.5M RGB-D frames","license":"Custom (non-commercial research, terms-of-use form)","year":2017,"source":"TU Munich / Stanford University","tags":["rgb-d","point-cloud","indoor","benchmark"],"links":{"download":"https://github.com/ScanNet/ScanNet","website":"http://www.scan-net.org/","paper":"https://arxiv.org/abs/1702.04405"}},{"name":"ScanNet++","category":"pointcloud","description":"High-fidelity successor to ScanNet: sub-millimeter laser scans, 33 MP DSLR images and iPhone RGB-D streams of indoor scenes with dense open-vocabulary semantic and instance annotations.","size":"460 scenes, 280k DSLR images, 3.7M iPhone RGB-D frames","license":"Custom (non-commercial research, application + token)","year":2023,"source":"TU Munich","tags":["laser-scan","rgb-d","indoor","benchmark"],"links":{"download":"https://scannetpp.mlsg.cit.tum.de/scannetpp/","website":"https://scannetpp.mlsg.cit.tum.de/scannetpp/","paper":"https://arxiv.org/abs/2308.11417"}},{"name":"Matterport3D","category":"pointcloud","description":"10,800 aligned panoramic views (RGB-D) across 90 building-scale scenes with surface reconstructions, camera poses and semantic segmentations of regions and objects.","size":"90 buildings, 194,400 RGB-D images","license":"Custom (non-commercial research, license agreement)","year":2017,"source":"Matterport / Princeton / Stanford / TUM","tags":["rgb-d","panorama","indoor","benchmark"],"links":{"download":"https://niessner.github.io/Matterport/","website":"https://niessner.github.io/Matterport/","paper":"https://arxiv.org/abs/1709.06158"}},{"name":"Habitat-Matterport 3D (HM3D)","category":"pointcloud","description":"1,000 building-scale 3D reconstructions of real interiors (homes, offices, public spaces) for embodied AI research; the largest dataset of its kind, usable in the Habitat simulator.","size":"1,000 scenes, 112.5k m² of floor space","license":"Custom (free for academic & commercial research, agreement)","year":2021,"source":"Meta AI / Matterport","tags":["mesh","indoor","embodied-ai"],"links":{"download":"https://aihabitat.org/datasets/hm3d/","website":"https://aihabitat.org/datasets/hm3d/","paper":"https://arxiv.org/abs/2109.08238"}},{"name":"Replica","category":"pointcloud","description":"18 highly photo-realistic reconstructions of indoor spaces with dense meshes, HDR textures, semantic classes and planar mirror/glass annotations.","size":"18 scenes","license":"Custom (research, Replica Research License)","year":2019,"source":"Meta Reality Labs","tags":["mesh","indoor","photorealistic"],"links":{"download":"https://github.com/facebookresearch/Replica-Dataset","website":"https://github.com/facebookresearch/Replica-Dataset","paper":"https://arxiv.org/abs/1906.05797"}},{"name":"ARKitScenes","category":"pointcloud","description":"5,047 RGB-D captures of 1,661 indoor venues acquired with Apple LiDAR devices, with high-resolution laser-scan ground truth and 3D oriented bounding boxes of furniture.","size":"5,047 scans, 1,661 venues","license":"Custom (Apple, non-commercial research)","year":2021,"source":"Apple","tags":["rgb-d","lidar","indoor"],"links":{"download":"https://github.com/apple/ARKitScenes","website":"https://github.com/apple/ARKitScenes","paper":"https://arxiv.org/abs/2111.08897"}},{"name":"3RScan","category":"pointcloud","description":"1,482 RGB-D scans of 478 indoor environments captured at multiple points in time, with object instance re-localization annotations, for change detection and long-term scene understanding.","size":"1,482 scans, 478 scenes","license":"Custom (non-commercial research, terms-of-use)","year":2019,"source":"TU Munich / Google","tags":["rgb-d","indoor","change-detection"],"links":{"download":"https://github.com/WaldJohannaU/3RScan","website":"https://github.com/WaldJohannaU/3RScan","paper":"https://arxiv.org/abs/1908.06109"}},{"name":"ISPRS Benchmark on Indoor Modelling","category":"pointcloud","description":"Point clouds of indoor environments of varying complexity with reference models, for benchmarking automatic reconstruction of indoor BIM/3D models from scans.","size":"6 point clouds","license":"Free for scientific use (attribution)","year":2018,"source":"ISPRS / TU Delft","tags":["point-cloud","scan-to-bim","benchmark","indoor"],"links":{"download":"https://www2.isprs.org/commissions/comm4/wg5/benchmark-on-indoor-modelling/","website":"https://www2.isprs.org/commissions/comm4/wg5/benchmark-on-indoor-modelling/"}},{"name":"CV4AEC Scan-to-BIM Challenge","category":"pointcloud","description":"Workshop challenge data pairing laser-scanned point clouds of large buildings with 2D floorplans and 3D wall/column models, directly targeting automated scan-to-BIM.","size":"Multiple buildings, LAZ + JSON ground truth","license":"Custom (challenge terms, research)","year":2023,"source":"CV4AEC Workshop (CVPR)","tags":["point-cloud","scan-to-bim","challenge","floorplan"],"links":{"download":"https://cv4aec.github.io/","website":"https://cv4aec.github.io/"}},{"name":"Semantic3D","category":"pointcloud","description":"Outdoor terrestrial laser scans of European streets, churches, castles and squares with over 4 billion points labeled in 8 classes, a classic outdoor segmentation benchmark relevant to heritage BIM.","size":"30 scans, 4+ billion points","license":"Custom (research, cite paper)","year":2017,"source":"ETH Zurich","tags":["point-cloud","outdoor","tls","benchmark"],"links":{"download":"http://www.semantic3d.net/","website":"http://www.semantic3d.net/","paper":"https://arxiv.org/abs/1704.03847"}},{"name":"SensatUrban","category":"pointcloud","description":"UAV-photogrammetry point clouds covering ~7.6 km² of three UK cities (Birmingham, Cambridge, York) with ~3 billion points labeled in 13 semantic classes including buildings.","size":"~3 billion points, 7.6 km²","license":"Custom (non-commercial research)","year":2021,"source":"University of Oxford / SenseTime","tags":["point-cloud","urban","uav","benchmark"],"links":{"download":"https://github.com/QingyongHu/SensatUrban","website":"https://github.com/QingyongHu/SensatUrban","paper":"https://arxiv.org/abs/2009.03137"}},{"name":"Toronto-3D","category":"pointcloud","description":"Mobile laser scanning dataset of ~1 km of urban roadways in Toronto with ~78M points labeled in 8 classes including buildings.","size":"~78.3M points, 1 km","license":"Custom (research)","year":2020,"source":"University of Waterloo","tags":["point-cloud","mls","urban"],"links":{"download":"https://github.com/WeikaiTan/Toronto-3D","website":"https://github.com/WeikaiTan/Toronto-3D","paper":"https://arxiv.org/abs/2003.08284"}},{"name":"Paris-Lille-3D","category":"pointcloud","description":"Mobile laser scanning benchmark of ~2 km of streets in Paris and Lille, ~143M points with 50 classes (coarsened to 9 for the benchmark).","size":"~143M points, ~2 km","license":"CC BY-NC-SA 3.0","year":2018,"source":"Mines ParisTech","tags":["point-cloud","mls","urban","benchmark"],"links":{"download":"https://npm3d.fr/paris-lille-3d","website":"https://npm3d.fr/paris-lille-3d","paper":"https://arxiv.org/abs/1712.00032"}},{"name":"DALES","category":"pointcloud","description":"Aerial LiDAR dataset covering 10 km² with half a billion points labeled in 8 classes (buildings, vegetation, power lines, etc.), one of the largest ALS benchmarks.","size":"~505M points, 10 km²","license":"Custom (research)","year":2020,"source":"University of Dayton","tags":["point-cloud","als","aerial","benchmark"],"links":{"download":"https://udayton.edu/engineering/research/centers/vision_lab/research/was_data_analysis_and_processing/dale.php","website":"https://udayton.edu/engineering/research/centers/vision_lab/research/was_data_analysis_and_processing/dale.php","paper":"https://arxiv.org/abs/2004.11985"}},{"name":"Hessigheim 3D (H3D)","category":"pointcloud","description":"High-density UAV LiDAR point cloud and textured mesh of the village of Hessigheim, Germany, with fine-grained class labels; updated across multiple epochs.","size":"~126M points + mesh, multiple epochs","license":"Free for scientific use (registration)","year":2021,"source":"University of Stuttgart / DFG","tags":["point-cloud","uav","mesh","benchmark"],"links":{"download":"https://ifpwww.ifp.uni-stuttgart.de/benchmark/hessigheim/default.aspx","website":"https://ifpwww.ifp.uni-stuttgart.de/benchmark/hessigheim/default.aspx","paper":"https://doi.org/10.1016/j.ophoto.2021.100001"}},{"name":"CubiCasa5K","category":"floorplan","description":"5,000 scanned residential floorplan images with dense vector annotations in over 80 object categories (rooms, walls, doors, fixtures) in SVG format.","size":"5,000 floorplans, 80+ categories","license":"CC BY-NC 4.0 (data); MIT (code)","year":2019,"source":"CubiCasa / Tampere University","tags":["floorplan","svg","residential","segmentation"],"links":{"download":"https://zenodo.org/record/2613548","website":"https://github.com/CubiCasa/CubiCasa5k","paper":"https://arxiv.org/abs/1904.01920"}},{"name":"RPLAN","category":"floorplan","description":"80,000+ real vector floorplans of Asian residential buildings with room semantics and topology, used for data-driven floorplan generation research.","size":"80,788 vector floorplans","license":"Custom (research use, request form)","year":2019,"source":"University of Science and Technology of China","tags":["floorplan","vector","generation","residential"],"links":{"download":"http://staff.ustc.edu.cn/~fuxm/projects/DeepLayout/index.html","website":"http://staff.ustc.edu.cn/~fuxm/projects/DeepLayout/index.html","paper":"https://doi.org/10.1145/3355089.3356556"}},{"name":"FloorPlanCAD","category":"floorplan","description":"Large-scale real-world CAD drawing dataset: 16,103 vector floorplans (SVG) from 100+ projects, residential buildings, schools, hospitals, malls, with line-grained panoptic annotations of 35 object categories.","size":"16,103 CAD drawings, 35 categories","license":"CC BY-NC 4.0 (annotations)","year":2021,"source":"Alibaba / Zhejiang University","tags":["floorplan","cad","svg","panoptic"],"links":{"download":"https://floorplancad.github.io/","website":"https://floorplancad.github.io/","paper":"https://arxiv.org/abs/2105.07147"}},{"name":"CVC-FP","category":"floorplan","description":"122 scanned architectural floorplan documents in 4 different drawing styles with ground truth for walls, doors, windows, rooms, a classic plan-analysis benchmark.","size":"122 scanned plans","license":"Free for research (attribution)","year":2015,"source":"Computer Vision Center, UAB Barcelona","tags":["floorplan","raster","document-analysis"],"links":{"download":"https://dag.cvc.uab.es/dataset/cvc-fp-database-for-structural-floor-plan-analysis/","website":"https://dag.cvc.uab.es/dataset/cvc-fp-database-for-structural-floor-plan-analysis/"}},{"name":"Modified Swiss Dwellings (MSD)","category":"floorplan","description":"Machine-learning-ready floorplan benchmark derived from Swiss Dwellings: 5.3k+ floorplans of building complexes (18.9k apartments) with structural-component inputs and access-graph constraints, used for the ICCV 2023 floorplan auto-completion challenge and ECCV 2024 MSD benchmark.","size":"5,300+ floorplans, 18,900+ apartments","license":"CC BY 4.0","year":2023,"source":"TU Delft / Archilyse","tags":["floorplan","generation","graph","benchmark"],"links":{"download":"https://data.4tu.nl/datasets/e1d89cb5-6872-48fc-be63-aadd687ee6f9","website":"https://www.kaggle.com/datasets/caspervanengelenburg/modified-swiss-dwellings","paper":"https://arxiv.org/abs/2407.10121"}},{"name":"SESYD Floorplans","category":"floorplan","description":"Synthetic document database including 1,000 floorplan drawings generated from 10 layout templates with full symbol-level ground truth.","size":"1,000 synthetic plans","license":"Free for research","year":2010,"source":"Université de Tours","tags":["floorplan","synthetic","symbol-spotting"],"links":{"download":"http://mathieu.delalandre.free.fr/projects/sesyd/","website":"http://mathieu.delalandre.free.fr/projects/sesyd/"}},{"name":"ROBIN","category":"floorplan","description":"Repository Of BuildIng plaNs: 510 categorized floorplan images for sketch-based retrieval and classification research.","size":"510 plans, 3 categories","license":"Unspecified (public GitHub)","year":2017,"source":"IIT Roorkee","tags":["floorplan","retrieval"],"links":{"download":"https://github.com/gesstalt/ROBIN","website":"https://github.com/gesstalt/ROBIN"}},{"name":"Swiss Dwellings","category":"floorplan","description":"Large open database of ~45,000 apartment layouts (3.1M+ geometries) from ~3,100 Swiss buildings, with geometry, room semantics and extensive simulation results (view, sun, noise, centrality).","size":"~45,000 apartments, ~3,100 buildings","license":"CC BY 4.0","year":2022,"source":"Archilyse AG","tags":["floorplan","vector","simulation","residential"],"links":{"download":"https://zenodo.org/record/7070952","website":"https://zenodo.org/record/7070952"}},{"name":"LIFULL HOME'S Dataset","category":"floorplan","description":"Massive Japanese real-estate dataset with ~5.3 million rental listings including ~83 million images and floorplans, available to researchers through the NII IDR program.","size":"5.3M listings, 83M images","license":"Custom (academic research, application via NII IDR)","year":2015,"source":"LIFULL Co. / National Institute of Informatics (Japan)","tags":["floorplan","real-estate","images","large-scale"],"links":{"download":"https://www.nii.ac.jp/dsc/idr/en/lifull/","website":"https://www.nii.ac.jp/dsc/idr/en/lifull/"}},{"name":"Zillow Indoor Dataset (ZInD)","category":"floorplan","description":"71,474 panoramas from 1,524 real unfurnished homes with 3D room layouts, 2D/3D floorplans and camera poses, the largest real indoor layout dataset.","size":"1,524 homes, 71,474 panoramas","license":"Custom (non-commercial research, agreement)","year":2021,"source":"Zillow","tags":["floorplan","panorama","layout","residential"],"links":{"download":"https://github.com/zillow/zind","website":"https://github.com/zillow/zind","paper":"https://arxiv.org/abs/2103.16544"}},{"name":"3D BAG","category":"city","description":"Up-to-date 3D building models of the entire Netherlands (~10 million buildings) at multiple LoDs (1.2, 1.3, 2.2), generated from BAG cadastre data and AHN LiDAR; downloadable as CityJSON, OBJ and GeoPackage.","size":"~10M buildings, whole Netherlands","license":"CC BY 4.0","year":2021,"source":"TU Delft 3D Geoinformation Group","tags":["citygml","cityjson","lod2","netherlands","open-data"],"links":{"download":"https://3dbag.nl/","website":"https://docs.3dbag.nl/en/","paper":"https://doi.org/10.14358/PERS.21-00032R2"}},{"name":"PDOK 3D Basisvoorziening","category":"city","description":"The full topography of the Netherlands in 3D as CityJSON, every building in LoD1.2 plus terrain, roads, canals and bridges, published as open data by the Dutch national geo-portal PDOK.","size":"Whole Netherlands, large tiles","license":"Open data (Dutch government, attribution)","year":2020,"source":"PDOK / Kadaster","tags":["cityjson","netherlands","terrain","open-data"],"links":{"download":"https://www.pdok.nl/3d-basisvoorziening","website":"https://www.pdok.nl/3d-basisvoorziening"}},{"name":"GlobalBuildingAtlas","category":"city","description":"Global LoD1 3D building models covering roughly 97% of the world's buildings (~2.75 billion) with polygons and heights derived from satellite data, in GeoJSON.","size":"~2.75 billion buildings worldwide","license":"CC BY 4.0","year":2025,"source":"TU Munich","tags":["lod1","global","footprints","heights"],"links":{"download":"https://github.com/zhu-xlab/GlobalBuildingAtlas","website":"https://github.com/zhu-xlab/GlobalBuildingAtlas"}},{"name":"NYC 3D Building Model","category":"city","description":"3D massing model of every building in New York City (Gothic-standard LoD1/LoD2 style), maintained by the NYC Department of Information Technology & Telecommunications.","size":"~1M buildings","license":"NYC Open Data (free use)","year":2016,"source":"City of New York","tags":["city-model","open-data","usa"],"links":{"download":"https://www.nyc.gov/site/planning/data-maps/open-data/dwn-nyc-3d-model-download.page","website":"https://www.nyc.gov/site/planning/data-maps/open-data/dwn-nyc-3d-model-download.page"}},{"name":"Berlin 3D City Model","category":"city","description":"CityGML LoD2 model of all ~550,000 buildings in Berlin with textures, downloadable for free from the Berlin Business Location Center download portal.","size":"~550,000 buildings","license":"Free use (Berlin open data terms)","year":2015,"source":"Berlin Partner / Senate of Berlin","tags":["citygml","lod2","textured","germany"],"links":{"download":"https://www.businesslocationcenter.de/en/economic-atlas/download-portal/","website":"https://www.businesslocationcenter.de/en/economic-atlas/download-portal/"}},{"name":"Helsinki 3D City Models","category":"city","description":"City of Helsinki's semantic CityGML city information model and separate reality mesh model, both openly downloadable, one of the most complete open city models.","size":"Whole city (CityGML + mesh)","license":"CC BY 4.0","year":2017,"source":"City of Helsinki","tags":["citygml","mesh","finland","open-data"],"links":{"download":"https://hri.fi/data/en_GB/dataset/helsingin-3d-kaupunkimalli","website":"https://www.hel.fi/en/decision-making/information-on-helsinki/maps-and-geospatial-data/helsinki-3d"}},{"name":"LoD2 Building Models NRW","category":"city","description":"Open CityGML LoD2 building models for all of North Rhine-Westphalia, Germany (~10 million buildings), with standardized roof shapes; freely downloadable per municipality.","size":"~10M buildings","license":"DL-DE Zero 2.0 (public domain equivalent)","year":2017,"source":"Geobasis NRW","tags":["citygml","lod2","germany","open-data"],"links":{"download":"https://www.opengeodata.nrw.de/produkte/geobasis/3dg/","website":"https://www.bezreg-koeln.nrw.de/geobasis-nrw/produkte-und-dienste/3d-gebaeudemodelle"}},{"name":"Bavaria LoD2 Building Models","category":"city","description":"Open CityGML LoD2 models of all ~8 million buildings in Bavaria, released as open data by the Bavarian surveying administration.","size":"~8M buildings","license":"CC BY 4.0","year":2023,"source":"LDBV Bayern","tags":["citygml","lod2","germany","open-data"],"links":{"download":"https://geodaten.bayern.de/opengeodata/OpenDataDetail.html?pn=lod2","website":"https://geodaten.bayern.de/opengeodata/"}},{"name":"swissBUILDINGS3D","category":"city","description":"Vector-based 3D building models of Switzerland with roof geometries (~3.4 million buildings), free to download from swisstopo since the 2021 open government data release.","size":"~3.4M buildings","license":"Open Government Data (free use with attribution)","year":2021,"source":"swisstopo","tags":["city-model","lod2","switzerland","open-data"],"links":{"download":"https://www.swisstopo.admin.ch/en/landscape-model-swissbuildings3d-3-0-beta","website":"https://www.swisstopo.admin.ch/en/landscape-model-swissbuildings3d-3-0-beta"}},{"name":"CityJSON Example Datasets","category":"city","description":"Collection of open 3D city models converted to CityJSON, including Delft, Den Haag, Montréal, New York, Rotterdam, Vienna and Zürich, handy small files for testing CityJSON tooling.","size":"~10 city extracts","license":"Varies per city (mostly open)","year":2019,"source":"cityjson.org","tags":["cityjson","citygml","samples"],"links":{"download":"https://www.cityjson.org/datasets/","website":"https://www.cityjson.org/datasets/"}},{"name":"Open City Model","category":"city","description":"CityGML, CityJSON and Parquet LoD1 models for ~125 million US buildings, generated algorithmically from Microsoft/OSM footprints, downloadable per state/county from a public AWS S3 bucket.","size":"~125M buildings (USA)","license":"ODbL","year":2019,"source":"opencitymodel project","tags":["citygml","cityjson","usa","lod1"],"links":{"download":"https://github.com/opencitymodel/opencitymodel","website":"https://github.com/opencitymodel/opencitymodel"}},{"name":"DOE Commercial Prototype Building Models","category":"energy","description":"EnergyPlus models of 16 commercial building types across all US climate zones (plus residential prototypes), the reference models for US energy-code analysis.","size":"16 building types × climate zones","license":"Public domain (US Government)","year":2011,"source":"US Department of Energy / PNNL","tags":["energyplus","bem","prototype","usa"],"links":{"download":"https://www.energycodes.gov/prototype-building-models","website":"https://www.energycodes.gov/prototype-building-models"}},{"name":"EnergyPlus Example Files","category":"energy","description":"Hundreds of example building energy models (IDF) shipped with EnergyPlus, covering nearly every simulation feature, useful as templates and test cases.","size":"700+ IDF files","license":"BSD-style (EnergyPlus license)","year":2001,"source":"US DOE / NREL","tags":["energyplus","bem","examples"],"links":{"download":"https://github.com/NREL/EnergyPlus","website":"https://energyplus.net/"}},{"name":"Building Data Genome Project 2","category":"energy","description":"Hourly whole-building meter data (electricity, water, gas, steam) from 3,053 meters across 1,636 non-residential buildings over two full years, with weather and metadata.","size":"1,636 buildings, 53.6M measurements","license":"CC BY-SA 4.0","year":2020,"source":"BUDS Lab (NUS) et al.","tags":["meter-data","time-series","benchmark"],"links":{"download":"https://github.com/buds-lab/building-data-genome-project-2","website":"https://github.com/buds-lab/building-data-genome-project-2","paper":"https://www.nature.com/articles/s41597-020-00712-x"}},{"name":"ASHRAE Great Energy Predictor III","category":"energy","description":"Kaggle competition dataset with over 20 million hourly meter readings from 1,448 buildings at 16 sites worldwide, for building energy prediction models.","size":"1,448 buildings, 20M+ readings","license":"Kaggle competition terms (non-commercial)","year":2019,"source":"ASHRAE / Kaggle","tags":["meter-data","time-series","competition"],"links":{"download":"https://www.kaggle.com/c/ashrae-energy-prediction","website":"https://www.kaggle.com/c/ashrae-energy-prediction"}},{"name":"NREL End-Use Load Profiles (ResStock & ComStock)","category":"energy","description":"Calibrated 15-minute end-use load profiles for the entire US residential and commercial building stock, including efficiency/electrification upgrade scenarios; freely downloadable from the open AWS data lake, updated twice a year.","size":"All major US building types, TB-scale","license":"NREL BSD-style (ResStock/ComStock licenses)","year":2021,"source":"NREL / US DOE","tags":["bem","building-stock","load-profiles","usa"],"links":{"download":"https://data.openei.org/submissions/4520","website":"https://www.nrel.gov/buildings/end-use-load-profiles.html","paper":"https://www.nrel.gov/docs/fy22osti/80889.pdf"}},{"name":"CBECS Microdata","category":"energy","description":"US Commercial Buildings Energy Consumption Survey public-use microdata: building characteristics and energy consumption for a representative national sample of commercial buildings.","size":"~6,400 buildings (2018 survey)","license":"Public domain (US Government)","year":2018,"source":"US EIA","tags":["survey","energy-use","usa"],"links":{"download":"https://www.eia.gov/consumption/commercial/data/2018/","website":"https://www.eia.gov/consumption/commercial/"}},{"name":"MOCS (Moving Objects in Construction Sites)","category":"construction","description":"41,668 images collected from 174 construction sites with instance annotations of 13 categories of moving objects (workers, excavators, cranes, trucks, etc.).","size":"41,668 images, 13 categories","license":"Custom (research)","year":2021,"source":"Huazhong University of Science and Technology","tags":["images","object-detection","site","safety"],"links":{"download":"http://www.anlab340.com/Archives/IndexArctype/index/t_id/17.html","website":"http://www.anlab340.com/Archives/IndexArctype/index/t_id/17.html","paper":"https://doi.org/10.1016/j.autcon.2020.103482"}},{"name":"SODA (Site Object Detection dAtaset)","category":"construction","description":"Large-scale construction-site object detection dataset: ~19,800 images with 286,201 annotated instances across 15 classes grouped into workers, materials, machines and layout, collected from multiple sites, phases and weather conditions (VOC format).","size":"19,846 images, 286,201 instances, 15 classes","license":"Custom (research)","year":2022,"source":"South China University of Technology / Tsinghua","tags":["images","object-detection","site","safety"],"links":{"download":"https://scut-scet-academic.oss-cn-guangzhou.aliyuncs.com/SODA/2022.2/VOCv1.zip","website":"https://arxiv.org/abs/2202.09554","paper":"https://doi.org/10.1016/j.autcon.2022.104499"}},{"name":"ConSLAM","category":"construction","description":"Real construction-site SLAM dataset: periodically recorded LiDAR, RGB and IMU sequences plus ground-truth TLS scans of an ongoing construction project.","size":"4 sequences + ground-truth scans","license":"Open (research)","year":2022,"source":"University of Cambridge","tags":["slam","lidar","site","progress-monitoring"],"links":{"download":"https://github.com/mac137/ConSLAM","website":"https://github.com/mac137/ConSLAM","paper":"https://doi.org/10.1007/978-3-031-25082-8_21"}},{"name":"Hilti SLAM Challenge Datasets","category":"construction","description":"Multi-sensor (LiDAR, stereo cameras, IMU) sequences recorded in construction environments with millimeter-accurate ground truth, from the annual Hilti SLAM challenges.","size":"3 challenge editions, dozens of sequences","license":"CC BY-NC-SA 4.0","year":2022,"source":"Hilti / Oxford / ETH Zurich","tags":["slam","lidar","site","benchmark"],"links":{"download":"https://hilti-challenge.com/","website":"https://hilti-challenge.com/"}},{"name":"Hard Hat Workers Dataset","category":"construction","description":"7,000+ images of construction workers annotated for head/helmet detection, widely used for PPE-compliance detection models.","size":"7,041 images","license":"Public domain (CC0)","year":2019,"source":"Northeastern University / Roboflow","tags":["images","safety","ppe","object-detection"],"links":{"download":"https://public.roboflow.com/object-detection/hard-hat-workers","website":"https://public.roboflow.com/object-detection/hard-hat-workers"}},{"name":"Structured3D","category":"synthetic","description":"Photo-realistic synthetic dataset of 3,500 house designs with 21,835 rooms, providing structured 3D annotations (planes, lines, junctions, layouts) plus panoramic renderings.","size":"3,500 houses, 21,835 rooms, 196k renderings","license":"Custom (non-commercial research, agreement)","year":2020,"source":"Kujiale / ShanghaiTech University","tags":["synthetic","layout","panorama","indoor"],"links":{"download":"https://structured3d-dataset.org/","website":"https://structured3d-dataset.org/","paper":"https://arxiv.org/abs/1908.00222"}},{"name":"3D-FRONT & 3D-FUTURE","category":"synthetic","description":"18,968 professionally designed synthetic house scenes furnished with high-quality textured 3D furniture models (3D-FUTURE), released by Alibaba for indoor scene research.","size":"18,968 rooms-scenes, 13,151 furniture CAD models","license":"Custom (free for research, registration)","year":2021,"source":"Alibaba","tags":["synthetic","interior","furniture","scene-synthesis"],"links":{"download":"https://tianchi.aliyun.com/specials/promotion/alibaba-3d-scene-dataset","website":"https://tianchi.aliyun.com/specials/promotion/alibaba-3d-scene-dataset","paper":"https://arxiv.org/abs/2011.09127"}},{"name":"InteriorNet","category":"synthetic","description":"Mega-scale synthetic RGB-D and video dataset rendered from ~22 million professionally designed interior layouts with 1M+ furniture CAD models.","size":"22M layouts, 5M images","license":"Custom (research)","year":2018,"source":"Imperial College London / Kujiale","tags":["synthetic","rgb-d","interior"],"links":{"download":"https://interiornet.org/","website":"https://interiornet.org/","paper":"https://arxiv.org/abs/1809.00716"}},{"name":"ProcTHOR-10K","category":"synthetic","description":"10,000 procedurally generated, fully interactive 3D houses for embodied AI, sampled from the ProcTHOR house-generation framework (AI2-THOR compatible).","size":"10,000 houses","license":"Apache 2.0","year":2022,"source":"Allen Institute for AI","tags":["synthetic","procedural","embodied-ai"],"links":{"download":"https://github.com/allenai/procthor","website":"https://procthor.allenai.org/","paper":"https://arxiv.org/abs/2206.06994"}},{"name":"HouseExpo","category":"synthetic","description":"Large-scale 2D indoor layout dataset with 35,126 house layouts (252,550 rooms) plus a simulation toolkit for robot navigation and mapping research.","size":"35,126 layouts, 252,550 rooms","license":"MIT","year":2019,"source":"HKUST","tags":["layout","2d","robotics","synthetic"],"links":{"download":"https://github.com/TeaganLi/HouseExpo","website":"https://github.com/TeaganLi/HouseExpo","paper":"https://arxiv.org/abs/1903.09845"}},{"name":"IFCNet","category":"benchmark","description":"Benchmark of 19,613 single-entity IFC objects extracted from real IFC models for BIM object classification; the curated IFCNetCore subset is directly downloadable as multi-view PNG, PLY point cloud and NPZ mesh packages.","size":"19,613 objects","license":"Unspecified","year":2021,"source":"RWTH Aachen University (E3D)","tags":["ifc","classification","ml","benchmark"],"links":{"download":"https://ifcnet.e3d.rwth-aachen.de/","website":"https://github.com/RWTH-E3D/ifcnet-models","paper":"https://arxiv.org/abs/2106.09712"}},{"name":"BIMNet","category":"benchmark","description":"openBIM-based scan-to-BIM benchmark: 25 real-world indoor scans (116.5M points, 382 rooms, 8,710 m²) each paired with a ground-truth IFC model, plus an IFC-based evaluation framework. Access requires approved Matterport3D terms forwarded to the maintainers.","size":"25 scans, 116.5M points, 382 rooms","license":"Custom (Matterport3D ToU + request); MIT (authors' part)","year":2025,"source":"Tsinghua University (THU CBIMS)","tags":["ifc","scan-to-bim","point-cloud","benchmark"],"links":{"download":"https://thucbims.github.io/bimnet.thucbims.github.io/","website":"https://thucbims.github.io/bimnet.thucbims.github.io/","paper":"https://doi.org/10.1016/j.autcon.2025.106096"}},{"name":"BuildingNet","category":"benchmark","description":"2,000 3D building exterior models with 513k labeled mesh components across 31 part categories (windows, roofs, walls…), for part segmentation of building meshes.","size":"2,000 buildings, 513k components","license":"Custom (research, registration)","year":2021,"source":"UMass Amherst et al.","tags":["mesh","segmentation","exterior","benchmark"],"links":{"download":"https://buildingnet.org/","website":"https://buildingnet.org/","paper":"https://arxiv.org/abs/2110.04955"}},{"name":"UrbanScene3D","category":"benchmark","description":"Large-scale urban scene dataset with over 128 km² of real and synthetic cities as meshes, point clouds and aerial imagery, for urban reconstruction and path planning.","size":"128 km², 16 scenes","license":"Custom (research)","year":2022,"source":"Shenzhen University (VCC)","tags":["urban","mesh","aerial","reconstruction"],"links":{"download":"https://vcc.tech/UrbanScene3D","website":"https://vcc.tech/UrbanScene3D","paper":"https://arxiv.org/abs/2107.04286"}},{"name":"TUM GNI Open IFC Models","category":"ifc","description":"Open collection of IFC building models from TUM BIM Fundamentals student projects, curated and published by the TUM Georg Nemetschek Institute for openBIM and AI research; also the basis of the ifc-bench benchmark.","size":"Dozens of IFC models from student building projects","license":"CC BY 4.0","year":2025,"source":"TU Munich, Georg Nemetschek Institute","tags":["ifc","student-projects","ai","open-data"],"links":{"download":"https://zenodo.org/records/19722012","website":"https://zenodo.org/records/19722012"}},{"name":"ResBIM-IFC","category":"ifc","description":"IFC-format release of the ResBIM synthetic residential-BIM dataset: ~600 parametric residential-unit building models exported to the open IFC standard for use in openBIM workflows and tools. The original ResBIM (by Liang, Yabuki & Fukuda) pairs each parametric 3D BIM model with an annotated 2D floor plan, generated via CNN and rule-based methods for BIM automation and 2D-to-BIM reconstruction research.","size":"~600 IFC models, ~6.7 GB","license":"MIT","year":2025,"source":"tsesterh (Hugging Face), from ResBIM by Liang, Yabuki & Fukuda","tags":["ifc","residential","synthetic","2d-to-bim"],"links":{"download":"https://huggingface.co/datasets/tsesterh/ResBIM-IFC","website":"https://github.com/RogerLiang0725/ResBIM","paper":"https://doi.org/10.1016/j.autcon.2025.106584"}}]}/*__DATASETS_END__*/;
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const ISSUE = "https://github.com/nbharathik/awesome-bim-datasets/issues/new?template=add-dataset.yml";
+const params = new URLSearchParams(location.search);
+const state = { q: params.get("q") || "", c: params.get("c") || "", sort: params.get("sort") || "az", view: params.get("view") || "list" };
+let data, names;
 
-/* ---------- Theme ---------- */
-const root = document.documentElement;
-const themeBtn = document.getElementById('theme-toggle');
-function applyTheme(t) {
-  root.setAttribute('data-theme', t);
-  themeBtn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
-  try { localStorage.setItem('bim-theme', t); } catch (e) {}
-}
-let savedTheme = null;
-try { savedTheme = localStorage.getItem('bim-theme'); } catch (e) {}
-applyTheme(savedTheme || 'light');
-themeBtn.addEventListener('click', () => applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
-
-/* ---------- Data prep ---------- */
-function licClass(lic) {
-  if (!lic) return 'unk';
-  const l = lic.toLowerCase();
-  if (/unknown|unspecified|varies/.test(l)) return 'unk';
-  if (/research|request|agreement|academic|restricted|terms of use|tou|tos|application|competition|challenge/.test(l)) return 'restr';
-  if (/by-nc|\bnc\b|non-?commercial|by-sa|sharealike|share-alike|registration|gpl/.test(l)) return 'cond';
-  if (/cc0|cc by|mit|apache|bsd|public domain|odbl|pddl|open data|open government|unlicense|dl-de|ogl|free/.test(l)) return 'open';
-  return 'unk';
-}
-const LIC_LABEL = { open: 'Open', cond: 'Conditional', restr: 'Research / on request', unk: 'Unspecified' };
-const catById = {};
-DATA.categories.forEach(c => { catById[c.id] = c; });
-const catOrder = {};
-DATA.categories.forEach((c, i) => { catOrder[c.id] = i; });
-DATA.datasets.forEach(d => {
-  d._lic = licClass(d.license);
-  d._catName = (catById[d.category] || {}).name || d.category;
-});
-
-/* ---------- State ---------- */
-const state = {
-  view: 'table', cats: new Set(), lics: new Set(),
-  year: '', tag: '', sort: 'category',
-};
-try { const v = localStorage.getItem('bim-view'); if (['table','list','gallery'].includes(v)) state.view = v; } catch (e) {}
-
-const $main = document.getElementById('main');
-const $count = document.getElementById('result-count');
-const $filterBtn = document.getElementById('filter-btn');
-const $filterCount = document.getElementById('filter-count');
-const $panel = document.getElementById('filter-panel');
-const $catChips = document.getElementById('cat-chips');
-const $licChips = document.getElementById('lic-chips');
-const $year = document.getElementById('year-filter');
-const $tag = document.getElementById('tag-filter');
-const $sort = document.getElementById('sort');
-const $clear = document.getElementById('clear-filters');
-
-/* ---------- Filter panel UI ---------- */
-DATA.categories.forEach(c => {
-  const b = document.createElement('button');
-  b.type = 'button'; b.className = 'fp-chip'; b.textContent = c.name; b.dataset.cat = c.id;
-  $catChips.appendChild(b);
-});
-Object.entries(LIC_LABEL).forEach(([k, label]) => {
-  const b = document.createElement('button');
-  b.type = 'button'; b.className = 'fp-chip'; b.textContent = label; b.dataset.lic = k;
-  $licChips.appendChild(b);
-});
-(function buildTagOptions() {
-  const freq = {};
-  DATA.datasets.forEach(d => (d.tags || []).forEach(t => { freq[t] = (freq[t] || 0) + 1; }));
-  Object.keys(freq).filter(t => freq[t] >= 2).sort()
-    .forEach(t => {
-      const o = document.createElement('option');
-      o.value = t; o.textContent = t;
-      $tag.appendChild(o);
-    });
-})();
-
-$catChips.addEventListener('click', e => {
-  const b = e.target.closest('.fp-chip'); if (!b) return;
-  state.cats.has(b.dataset.cat) ? state.cats.delete(b.dataset.cat) : state.cats.add(b.dataset.cat);
+fetch("data/datasets.json").then(r => r.json()).then(d => {
+  data = d;
+  names = Object.fromEntries(d.categories.map(c => [c.id, c.name]));
+  d.datasets.forEach(x => x.text = [x.name, x.description, x.license, names[x.category], x.year].join(" ").toLowerCase());
+  $("#q").value = state.q;
+  $("#sort").value = state.sort;
   render();
-});
-$licChips.addEventListener('click', e => {
-  const b = e.target.closest('.fp-chip'); if (!b) return;
-  state.lics.has(b.dataset.lic) ? state.lics.delete(b.dataset.lic) : state.lics.add(b.dataset.lic);
-  render();
-});
-$year.addEventListener('change', () => { state.year = $year.value; render(); });
-$tag.addEventListener('change', () => { state.tag = $tag.value; render(); });
-$sort.addEventListener('change', () => { state.sort = $sort.value; render(); });
-$clear.addEventListener('click', () => {
-  state.cats.clear(); state.lics.clear();
-  state.year = ''; state.tag = ''; state.sort = 'category';
-  $year.value = ''; $tag.value = ''; $sort.value = 'category';
-  render();
+}).catch(() => {
+  $("#list").innerHTML = '<p class="empty">The data could not be loaded. Open this page through a web server, for example <code>python -m http.server</code>.</p>';
 });
 
-
-
-function togglePanel(open) {
-  const isOpen = open !== undefined ? open : !$panel.classList.contains('open');
-  $panel.classList.toggle('open', isOpen);
-  $filterBtn.setAttribute('aria-expanded', String(isOpen));
-}
-$filterBtn.addEventListener('click', e => { e.stopPropagation(); togglePanel(); });
-document.addEventListener('click', e => {
-  if ($panel.classList.contains('open') && !$panel.contains(e.target) && e.target !== $filterBtn) togglePanel(false);
-});
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') togglePanel(false);
-});
-
-/* ---------- View switch ---------- */
-document.querySelectorAll('.view-switch button').forEach(b => {
-  b.addEventListener('click', () => {
-    state.view = b.dataset.view;
-    try { localStorage.setItem('bim-view', state.view); } catch (e) {}
-    render();
-  });
-});
-
-/* ---------- Filtering & sorting ---------- */
-function activeFilterCount() {
-  return state.cats.size + state.lics.size + (state.year ? 1 : 0) + (state.tag ? 1 : 0);
-}
-function matches(d) {
-  if (state.cats.size && !state.cats.has(d.category)) return false;
-  if (state.lics.size && !state.lics.has(d._lic)) return false;
-  if (state.year && !(d.year && d.year >= +state.year)) return false;
-  if (state.tag && !(d.tags || []).includes(state.tag)) return false;
-  return true;
-}
-function cmp(a, b) {
-  if (state.sort === 'name') return a.name.localeCompare(b.name);
-  if (state.sort === 'year-desc') return (b.year || 0) - (a.year || 0) || a.name.localeCompare(b.name);
-  if (state.sort === 'year-asc') return (a.year || 9999) - (b.year || 9999) || a.name.localeCompare(b.name);
-  return (catOrder[a.category] - catOrder[b.category]) || a.name.localeCompare(b.name);
+function item(x, flat) {
+  const links = ["data", "paper", "code"].filter(k => x[k]).map(k => `<a href="${esc(x[k])}">${k[0].toUpperCase() + k.slice(1)}</a>`).join("");
+  const cat = flat ? `<span class="cat" data-cat="${x.category}"><i class="dot"></i>${esc(names[x.category])}</span>` : "";
+  return `<article class="item"><h3><a href="${esc(x.url)}">${esc(x.name)}</a>${cat}</h3><p class="desc">${esc(x.description)}</p>`
+    + `<span class="lic">${esc(x.license)}</span><span class="year">${x.year || ""}</span><span class="links">${links}</span></article>`;
 }
 
-/* ---------- Rendering ---------- */
-function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function linkHtml(d) {
-  const links = d.links || {};
-  let h = '';
-  if (links.download) h += '<a href="' + esc(links.download) + '" target="_blank" rel="noopener">Download</a>';
-  if (links.website && links.website !== links.download) h += '<a href="' + esc(links.website) + '" target="_blank" rel="noopener">Website</a>';
-  if (links.paper) h += '<a href="' + esc(links.paper) + '" target="_blank" rel="noopener">Paper</a>';
-  return '<div class="links-row">' + h + '</div>';
-}
-function nameLink(d) {
-  const site = (d.links || {}).website || (d.links || {}).download;
-  return site ? '<a href="' + esc(site) + '" target="_blank" rel="noopener">' + esc(d.name) + '</a>' : esc(d.name);
-}
-function licBadge(d) {
-  return '<span class="lic-text" title="' + LIC_LABEL[d._lic] + '">' + esc(d.license || 'Unspecified') + '</span>';
-}
-
-function renderTable(items, grouped) {
-  let rows = '';
-  let lastCat = null;
-  items.forEach(d => {
-    if (grouped && d.category !== lastCat) {
-      lastCat = d.category;
-      rows += '<tr class="t-group"><td colspan="4">' + esc(d._catName) + '</td></tr>';
-    }
-    rows += '<tr>' +
-      '<td class="cell-name">' + nameLink(d) + '</td>' +
-      '<td class="cell-cat">' + (grouped ? '' : esc(d._catName)) + '</td>' +
-      '<td>' + licBadge(d) + '</td>' +
-      '<td>' + linkHtml(d) + '</td>' +
-    '</tr>';
-  });
-  return '<div class="table-card"><div class="table-scroll"><table>' +
-    '<thead><tr><th>Dataset</th><th>Category</th><th>License</th><th>Links</th></tr></thead>' +
-    '<tbody>' + rows + '</tbody></table></div></div>';
-}
-
-function renderList(items, grouped) {
-  let html = '';
-  let lastCat = null;
-  let open = false;
-  items.forEach(d => {
-    if (grouped && d.category !== lastCat) {
-      if (open) html += '</div>';
-      lastCat = d.category;
-      html += '<div class="group-heading">' + esc(d._catName) + '</div><div class="list-card">';
-      open = true;
-    } else if (!open) {
-      html += '<div class="list-card">';
-      open = true;
-    }
-    html += '<div class="list-row">' +
-      '<div class="list-main"><div class="list-name">' + nameLink(d) + '</div>' +
-      '<div class="list-sub">' + esc(grouped ? (d.source || '') : d._catName) + '</div></div>' +
-      licBadge(d) + linkHtml(d) +
-    '</div>';
-  });
-  if (open) html += '</div>';
-  return html;
-}
-
-function renderGallery(items, grouped) {
-  let html = '';
-  let lastCat = null;
-  let open = false;
-  items.forEach(d => {
-    if (grouped && d.category !== lastCat) {
-      if (open) html += '</div>';
-      lastCat = d.category;
-      html += '<div class="group-heading">' + esc(d._catName) + '</div><div class="gallery">';
-      open = true;
-    } else if (!open) {
-      html += '<div class="gallery">';
-      open = true;
-    }
-    html += '<div class="card">' +
-      '<div class="card-top"><span class="card-cat">' + esc(grouped ? (d.source || '') : d._catName) + '</span>' +
-      (d.year ? '<span class="card-year">' + d.year + '</span>' : '') + '</div>' +
-      '<div class="card-name">' + nameLink(d) + '</div>' +
-      (d.description ? '<div class="card-desc">' + esc(d.description) + '</div>' : '') +
-      '<div class="card-foot">' + licBadge(d) + linkHtml(d) + '</div>' +
-    '</div>';
-  });
-  if (open) html += '</div>';
-  return html;
+function group(items, c) {
+  const title = c ? `<h2 data-cat="${c.id}"><i class="dot"></i>${esc(c.name)} <span class="n">${items.length}</span></h2>` : "";
+  return `<section>${title}<div class="items">${items.join("")}</div></section>`;
 }
 
 function render() {
-  const items = DATA.datasets.filter(matches).sort(cmp);
-  const grouped = state.sort === 'category';
-
-  const n = activeFilterCount();
-  $filterCount.textContent = n;
-  $filterBtn.classList.toggle('has-filters', n > 0);
-  document.querySelectorAll('#cat-chips .fp-chip').forEach(b => b.classList.toggle('active', state.cats.has(b.dataset.cat)));
-  document.querySelectorAll('#lic-chips .fp-chip').forEach(b => b.classList.toggle('active', state.lics.has(b.dataset.lic)));
-  document.querySelectorAll('.view-switch button').forEach(b => b.classList.toggle('active', b.dataset.view === state.view));
-
-  $count.textContent = items.length === DATA.datasets.length
-    ? items.length + ' datasets'
-    : items.length + ' of ' + DATA.datasets.length + ' datasets';
-
-  if (!items.length) {
-    $main.innerHTML = '<div class="empty"><p>No datasets match the current filters.</p>' +
-      '<button type="button" id="empty-clear">Reset filters</button></div>';
-    document.getElementById('empty-clear').addEventListener('click', () => { $clear.click(); });
-    return;
+  const terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+  const found = data.datasets.filter(x => terms.every(t => x.text.includes(t)));
+  const items = found.filter(x => !state.c || x.category === state.c);
+  $("#cats").innerHTML = [{ id: "", name: "All" }, ...data.categories].map(c => {
+    const n = found.filter(x => !c.id || x.category === c.id).length;
+    return `<button type="button" data-c="${c.id}" data-cat="${c.id}" aria-pressed="${c.id === state.c}"${n ? "" : ' class="none"'}>`
+      + `${c.id ? '<i class="dot"></i>' : ""}${esc(c.name)} <span class="n">${n}</span></button>`;
+  }).join("");
+  let html = "";
+  if (state.sort === "new") {
+    const sorted = [...items].sort((a, b) => (b.year || 0) - (a.year || 0) || a.name.localeCompare(b.name));
+    if (sorted.length) html = group(sorted.map(x => item(x, true)));
+  } else {
+    for (const c of data.categories) {
+      const matches = items.filter(x => x.category === c.id);
+      if (matches.length) html += group(matches.map(x => item(x)), c);
+    }
   }
-  if (state.view === 'list') $main.innerHTML = renderList(items, grouped);
-  else if (state.view === 'gallery') $main.innerHTML = renderGallery(items, grouped);
-  else $main.innerHTML = renderTable(items, grouped);
+  $("#list").className = state.view;
+  const where = state.c ? ` in ${esc(names[state.c])}` : "";
+  $("#list").innerHTML = html || `<p class="empty">No datasets${where} match “${esc(state.q)}”.<br>`
+    + `<button type="button" data-reset>Show all datasets</button> or <a href="${ISSUE}">suggest a dataset</a>.</p>`;
+  $("#count").textContent = items.length === data.datasets.length ? `${items.length} datasets` : `${items.length} of ${data.datasets.length} datasets`;
+  document.querySelectorAll("[data-view]").forEach(b => b.setAttribute("aria-pressed", b.dataset.view === state.view));
+  const defaults = { sort: "az", view: "list" };
+  const p = new URLSearchParams(Object.entries(state).filter(([k, v]) => v && v !== defaults[k]));
+  history.replaceState(null, "", p.toString() ? `?${p}` : location.pathname);
 }
 
-render();
+$("#q").addEventListener("input", e => { state.q = e.target.value; render(); });
+$("#sort").addEventListener("change", e => { state.sort = e.target.value; render(); });
+$("#list").addEventListener("click", e => {
+  if (e.target.closest("[data-reset]")) { state.q = state.c = $("#q").value = ""; render(); }
+});
+$("#cats").addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if (b) { state.c = b.dataset.c; render(); }
+});
+$(".seg").addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if (b) { state.view = b.dataset.view; render(); }
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "/" && document.activeElement !== $("#q")) { e.preventDefault(); $("#q").focus(); }
+});
 </script>
 </body>
 </html>

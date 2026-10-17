@@ -1,150 +1,149 @@
 #!/usr/bin/env python3
-"""Build script for Awesome BIM Datasets.
+"""Validate and sort data/datasets.json, then generate README.md from it.
 
-Usage:  python3 scripts/build.py
+  python scripts/build.py           validate, sort the data and write README.md
+  python scripts/build.py --check   fail if the data or README.md are out of date
+  python scripts/build.py --links   also report links that do not respond
 """
 
+import argparse
 import json
 import re
+import sys
+import time
+import urllib.error
+import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA_FILE = ROOT / "data" / "datasets.json"
-README_FILE = ROOT / "README.md"
-INDEX_FILE = ROOT / "index.html"
-
-DATA_START = "/*__DATASETS_START__*/"
-DATA_END = "/*__DATASETS_END__*/"
-
-SITE_URL = "https://nbharathik.github.io/awesome-bim-datasets/"
-REPO_URL = "https://github.com/nbharathik/awesome-bim-datasets"
+SITE = "https://nbharathik.github.io/awesome-bim-datasets/"
+FIELDS = ("name", "category", "description", "license", "year", "url", "data", "paper", "code")
+REQUIRED = ("name", "category", "description", "license", "url")
+LINKS = ("url", "data", "paper", "code")
 
 
-def md_escape(text: str) -> str:
-    return text.replace("|", "\\|")
+def load():
+    data = json.loads((ROOT / "data/datasets.json").read_text(encoding="utf-8"))
+    categories = {c["id"] for c in data["categories"]}
+    errors, names = [], set()
+    for d in data["datasets"]:
+        name = d.get("name", "?")
+        errors += [f"{name}: missing {k}" for k in REQUIRED if not str(d.get(k, "")).strip()]
+        errors += [f"{name}: unknown field {k}" for k in d if k not in FIELDS]
+        errors += [f"{name}: {k} must start with http" for k in LINKS if k in d and not d[k].startswith("http")]
+        if d.get("category") not in categories:
+            errors.append(f"{name}: unknown category {d.get('category')}")
+        if name.casefold() in names:
+            errors.append(f"{name}: duplicate name")
+        names.add(name.casefold())
+    if "\\u2014" in json.dumps(data):
+        errors.append("Use a comma or colon instead of an em dash")
+    if errors:
+        sys.exit("\n".join(errors))
+    order = [c["id"] for c in data["categories"]]
+    data["datasets"] = sorted(({k: d[k] for k in FIELDS if k in d} for d in data["datasets"]),
+                              key=lambda d: (order.index(d["category"]), d["name"].casefold()))
+    return data
 
 
-def anchor(name: str) -> str:
-    """GitHub heading anchor.
-
-    Mirrors GitHub's slugger: lowercase, strip punctuation, then replace each
-    whitespace character with a hyphen *without* collapsing runs. This matters
-    for headings containing " & " (e.g. "Point Clouds & Scan-to-BIM"), where
-    removing the "&" leaves two spaces and GitHub emits a double hyphen.
-    """
-    a = name.strip().lower()
-    a = re.sub(r"[^\w\s-]", "", a)
-    return re.sub(r"\s", "-", a)
+def dump(data):
+    rows = lambda items: ",\n".join("    " + json.dumps(item, ensure_ascii=False) for item in items)
+    return "{\n" + ",\n".join(f'  "{k}": [\n{rows(data[k])}\n  ]' for k in ("categories", "related", "datasets")) + "\n}\n"
 
 
-def dataset_links(d: dict) -> str:
-    parts = []
-    links = d.get("links", {})
-    if links.get("download"):
-        parts.append(f"[Download]({links['download']})")
-    if links.get("website") and links.get("website") != links.get("download"):
-        parts.append(f"[Website]({links['website']})")
-    if links.get("paper"):
-        parts.append(f"[Paper]({links['paper']})")
-    return " · ".join(parts) if parts else "—"
+def anchor(title):
+    return re.sub(r"\s", "-", re.sub(r"[^\w\s-]", "", title.lower()))
 
 
-def build_readme(data: dict) -> str:
-    cats = data["categories"]
+def cell(text):
+    return str(text).replace("|", "\\|")
+
+
+def readme(data):
     datasets = data["datasets"]
-    by_cat = {c["id"]: [] for c in cats}
-    for d in datasets:
-        by_cat.setdefault(d["category"], []).append(d)
-
-    lines = []
-    lines.append("# Awesome BIM Datasets [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)")
-    lines.append("")
-    lines.append("> A curated list of open datasets for **Building Information Modeling (BIM)** and the built"
-                 " environment: IFC models, point clouds and scan-to-BIM data, floorplans, 3D city models,"
-                 " energy and performance data, construction-site data, synthetic scenes, and ML benchmarks.")
-    lines.append("")
-    lines.append(f"Browse with search and filters on the website: [{SITE_URL.rstrip('/')}]({SITE_URL})")
-    lines.append("")
-
-    # Table of contents
-    lines.append("## Contents")
-    lines.append("")
-    for c in cats:
-        if not by_cat.get(c["id"]):
-            continue
-        lines.append(f"- [{c['name']}](#{anchor(c['name'])})")
-    if data.get("related"):
-        lines.append("- [Related lists](#related-lists)")
-    lines.append("- [License notes](#license-notes)")
-    lines.append("- [Contributing](#contributing)")
-    lines.append("")
-
-    for c in cats:
-        items = by_cat.get(c["id"], [])
+    lines = [
+        "# Awesome BIM Datasets [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)",
+        "",
+        "> A curated list of open datasets for Building Information Modeling (BIM) and the built environment.",
+        "",
+        f"**[Search all {len(datasets)} datasets on the website]({SITE})** · "
+        "[Suggest a dataset](https://github.com/nbharathik/awesome-bim-datasets/issues/new?template=add-dataset.yml)",
+        "",
+        "## Contents",
+        "",
+    ]
+    groups = [(c, [d for d in datasets if d["category"] == c["id"]]) for c in data["categories"]]
+    lines += [f"- [{c['name']}](#{anchor(c['name'])}) ({len(items)})" for c, items in groups if items]
+    lines += ["- [Related lists](#related-lists)", ""]
+    for c, items in groups:
         if not items:
             continue
-        items = sorted(items, key=lambda d: d["name"].lower())
-        lines.append(f"## {c['name']}")
-        lines.append("")
-        lines.append(f"_{c['description']}_")
-        lines.append("")
-        lines.append("| Dataset | License | Links |")
-        lines.append("| --- | --- | --- |")
+        lines += [f"## {c['name']}", "", "| Dataset | Description | License | Links |", "| --- | --- | --- | --- |"]
         for d in items:
-            website = d.get("links", {}).get("website") or d.get("links", {}).get("download") or ""
-            name = f"[{md_escape(d['name'])}]({website})" if website else md_escape(d["name"])
-            lic = md_escape(d.get("license", "Unspecified"))
-            lines.append(f"| **{name}** | {lic} | {dataset_links(d)} |")
+            links = " · ".join(f"[{k.title()}]({d[k]})" for k in ("data", "paper", "code") if k in d)
+            lines.append(f"| [{cell(d['name'])}]({d['url']}) | {cell(d['description'])} | {cell(d['license'])} | {links} |")
         lines.append("")
-
-    if data.get("related"):
-        lines.append("## Related lists")
-        lines.append("")
-        for r in data["related"]:
-            lines.append(f"- [{r['name']}]({r['url']}): {r['note']}")
-        lines.append("")
-
-    lines.append("## License notes")
-    lines.append("")
-    lines.append("- Licenses shown are those stated by the dataset providers at the time of listing."
-                 " **Always verify the current terms at the source before use**, especially for commercial projects.")
-    lines.append("- *Custom (research)* means access requires agreeing to a dataset-specific research terms-of-use,"
-                 " usually via a request form.")
-    lines.append("- This list itself is released under [CC0 1.0](LICENSE).")
-    lines.append("")
-    lines.append("## Contributing")
-    lines.append("")
-    lines.append("Contributions are welcome. Found a dataset that's missing, or a dead link?"
-                 " Please open an issue or a pull request, see [CONTRIBUTING.md](CONTRIBUTING.md)."
-                 " All data lives in [`data/datasets.json`](data/datasets.json); run"
-                 " `python3 scripts/build.py` to regenerate the README and website from it.")
-    lines.append("")
+    lines += ["## Related lists", ""]
+    lines += [f"- [{r['name']}]({r['url']}): {r['note']}." for r in data["related"]]
+    lines += [
+        "",
+        "## Contributing",
+        "",
+        "All entries live in [`data/datasets.json`](data/datasets.json). This README is generated from it and the website"
+        " reads it directly. See [CONTRIBUTING.md](CONTRIBUTING.md).",
+        "",
+        "Licenses are shown as stated by each provider. Check the source before use. This list is released under [CC0](LICENSE).",
+        "",
+    ]
     return "\n".join(lines)
 
 
-def inject_site_data(data: dict) -> None:
-    html = INDEX_FILE.read_text(encoding="utf-8")
-    start = html.index(DATA_START) + len(DATA_START)
-    end = html.index(DATA_END)
-    payload = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
-    html = html[:start] + payload + html[end:]
-    INDEX_FILE.write_text(html, encoding="utf-8")
+def status(url, tries=3):
+    request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (link check; awesome-bim-datasets)"})
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            return response.status
+    except urllib.error.HTTPError as error:
+        return error.code
+    except Exception as error:
+        if tries > 1:
+            time.sleep(3)
+            return status(url, tries - 1)
+        return str(getattr(error, "reason", error))
 
 
-def main() -> None:
-    data = json.loads(DATA_FILE.read_text(encoding="utf-8"))
-    # Basic validation
-    cat_ids = {c["id"] for c in data["categories"]}
-    names = set()
-    for d in data["datasets"]:
-        assert d["category"] in cat_ids, f"Unknown category {d['category']!r} for {d['name']!r}"
-        assert d["name"] not in names, f"Duplicate dataset name {d['name']!r}"
-        names.add(d["name"])
-        assert d.get("links", {}).get("download") or d.get("links", {}).get("website"), \
-            f"{d['name']!r} needs at least a download or website link"
-    README_FILE.write_text(build_readme(data), encoding="utf-8")
-    inject_site_data(data)
-    print(f"Built README.md and index.html with {len(data['datasets'])} datasets.")
+def check_links(data):
+    urls = sorted({(d[k], d["name"]) for d in data["datasets"] for k in LINKS if k in d})
+    urls += [(r["url"], r["name"]) for r in data["related"]]
+    with ThreadPoolExecutor(8) as pool:
+        results = list(pool.map(lambda item: status(item[0]), urls))
+    broken = 0
+    for (url, name), code in zip(urls, results):
+        if code in (401, 403, 405, 429):
+            print(f"blocked {code}  {name}  {url}")
+        elif not isinstance(code, int) or code >= 400:
+            print(f"BROKEN  {code}  {name}  {url}")
+            broken += 1
+    print(f"Checked {len(urls)} links, {broken} broken.")
+    return broken
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--check", action="store_true", help="fail if the data or README.md are out of date")
+    parser.add_argument("--links", action="store_true", help="check that every link responds")
+    args = parser.parse_args()
+    data = load()
+    for name, text in {"data/datasets.json": dump(data), "README.md": readme(data)}.items():
+        path = ROOT / name
+        if not args.check:
+            path.write_text(text, encoding="utf-8", newline="\n")
+        elif path.read_text(encoding="utf-8") != text:
+            sys.exit(f"{name} is out of date. Run: python scripts/build.py")
+    print(f"{len(data['datasets'])} datasets OK.")
+    if args.links and check_links(data):
+        sys.exit(1)
 
 
 if __name__ == "__main__":
